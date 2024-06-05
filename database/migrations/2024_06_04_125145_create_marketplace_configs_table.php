@@ -12,8 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('marketplace_configs', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->id('marketplace_configs_id');
+            $table->text('name');
+            $table->foreignId('marketplace_id');
+            $table->foreign('marketplace_id')->references('marketplaces_id')->on('marketplaces');
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
         });
     }
 

@@ -12,8 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('operation_logs', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->id('operation_logs_id');
+            $table->foreignId('operation_id');
+            $table->foreign('operation_id')->references('operations_id')->on('operations');
+            $table->string('method');
+            $table->text('uri');
+            $table->json('request_details');
+            $table->json('response_details')->nullable();
         });
     }
 

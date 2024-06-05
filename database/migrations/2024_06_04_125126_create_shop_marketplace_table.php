@@ -12,8 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('shop_marketplace', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->id('shop_marketplace_id');
+            $table->foreignId('marketplace_id');
+            $table->foreign('marketplace_id')->references('marketplaces_id')->on('marketplaces');
+            $table->foreignId('shop_id');
+            $table->foreign('shop_id')->references('shops_id')->on('shops');
+            $table->string('shop_alias');
         });
     }
 

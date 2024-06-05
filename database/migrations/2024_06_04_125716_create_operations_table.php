@@ -12,8 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('operations', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->id('operations_id');
+            $table->foreignId('product_id');
+            $table->foreign('product_id')->references('products_id')->on('products');
+            $table->foreignId('operation_type_id');
+            $table->foreign('operation_type_id')->references('operation_types_id')->on('operation_types');
+            $table->timestamp('created_at');
         });
     }
 

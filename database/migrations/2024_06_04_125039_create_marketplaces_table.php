@@ -12,7 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('marketplaces', function (Blueprint $table) {
-            $table->id();
+            $table->id('marketplaces_id');
+            $table->string('name');
+            $table->string('connector_class_name');
             $table->timestamps();
         });
     }
