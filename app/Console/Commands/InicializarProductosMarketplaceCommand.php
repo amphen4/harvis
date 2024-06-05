@@ -52,7 +52,14 @@ class InicializarProductosMarketplaceCommand extends Command
                     'created_at' => (new Carbon)->toDateTimeString(),
                     'updated_at' => (new Carbon)->toDateTimeString()
                 ]);
-                Product::create( $dataProduct );
+                if( !Product::where('shop_id', $shop->shops_id)
+                    ->where('marketplace_id', $marketplace->marketplaces_id)
+                    ->where('sku', $dataTranslated['sku'])
+                    ->count() 
+                ){
+                    Product::create( $dataProduct );
+                }
+                
             }
         }
         
