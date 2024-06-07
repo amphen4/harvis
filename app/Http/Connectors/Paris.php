@@ -94,18 +94,20 @@ class Paris {
         }
         throw new Error("Problemas para autenticarse en Paris Marketplace");
     }
-    public function getProducts()
+    public function getProducts($queryParams = [])
     {
-        // TODO: PAGINAR
-        // The current time. Needed to create the Timestamp parameter below.
-        $now = new \DateTime();
-        $timestamp = $now->format(\DateTime::ISO8601);
-        
-        $prices = 'true';
-        $offset = 0;
-        $limit = 25;
-        $uri = $this::API_BASE_URL;
-        $uri .= "/v2/products/search?limit=$limit&offset=$offset&prices=$prices";
+        $uri = $this::API_BASE_URL . '/v2/products/search';
+        if( count($queryParams) ){
+            $c = 0;
+            foreach( $queryParams as $key => $value ){
+                if( $c === 0 ){
+                    $uri .= "?$key=$value";
+                }else{
+                    $uri .= "&$key=$value";
+                }
+                $c++;
+            }
+        }
         
         $response = $this->makeRequest('GET', $uri, null, []);
 
