@@ -15,7 +15,7 @@
             </v-card-text>
             <v-card-actions>
               <v-spacer />
-              <v-btn @click="toLogin" color="primary">Login</v-btn>
+              <v-btn @click="toLogin" variant="outlined" color="primary">Ingresar</v-btn>
             </v-card-actions>
           </v-card>
         </v-col>

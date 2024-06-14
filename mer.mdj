@@ -3321,6 +3321,21 @@
 										},
 										{
 											"_type": "ERDColumnView",
+											"_id": "AAAAAAGP8w0M+oZYv84=",
+											"_parent": {
+												"$ref": "AAAAAAGP8wip3oYBuHE="
+											},
+											"model": {
+												"$ref": "AAAAAAGP8w0M7oZVgQ0="
+											},
+											"font": "Arial;13;0",
+											"left": 1389,
+											"top": 248,
+											"width": 144.25537109375,
+											"height": 13
+										},
+										{
+											"_type": "ERDColumnView",
 											"_id": "AAAAAAGP8wpwNYYqpBo=",
 											"_parent": {
 												"$ref": "AAAAAAGP8wip3oYBuHE="
@@ -3330,7 +3345,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 1389,
-											"top": 248,
+											"top": 263,
 											"width": 144.25537109375,
 											"height": 13
 										},
@@ -3345,7 +3360,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 1389,
-											"top": 263,
+											"top": 278,
 											"width": 144.25537109375,
 											"height": 13
 										},
@@ -3360,7 +3375,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 1389,
-											"top": 278,
+											"top": 293,
 											"width": 144.25537109375,
 											"height": 13
 										}
@@ -3369,14 +3384,14 @@
 									"left": 1384,
 									"top": 183,
 									"width": 154.25537109375,
-									"height": 113
+									"height": 128
 								}
 							],
 							"font": "Arial;13;0",
 							"left": 1384,
 							"top": 160,
 							"width": 154.25537109375,
-							"height": 136,
+							"height": 151,
 							"nameLabel": {
 								"$ref": "AAAAAAGP8wip3oYAzZo="
 							},
@@ -3437,7 +3452,7 @@
 									},
 									"font": "Arial;13;0",
 									"left": 1449,
-									"top": 315,
+									"top": 330,
 									"height": 13,
 									"alpha": -0.5235987755982988,
 									"distance": 30,
@@ -3454,7 +3469,7 @@
 								"$ref": "AAAAAAGP4wsW3g1j99w="
 							},
 							"lineStyle": 2,
-							"points": "1224:357;1464:357;1464:296",
+							"points": "1224:357;1464:357;1464:311",
 							"nameLabel": {
 								"$ref": "AAAAAAGP8wsiy4ZCdHg="
 							},
@@ -4774,6 +4789,15 @@
 								"$ref": "AAAAAAGP8wip3oX9UqE="
 							},
 							"name": "sku",
+							"length": 0
+						},
+						{
+							"_type": "ERDColumn",
+							"_id": "AAAAAAGP8w0M7oZVgQ0=",
+							"_parent": {
+								"$ref": "AAAAAAGP8wip3oX9UqE="
+							},
+							"name": "stock",
 							"length": 0
 						},
 						{
