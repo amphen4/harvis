@@ -21,7 +21,10 @@ const store = useStore()
 /* eslint-disable @typescript-eslint/no-explicit-any */
 function validate(values: any, { setErrors }: any) {
   //console.log('store', store.state.auth);
-  return store.dispatch('auth/login',{username: username.value, password: password.value}).catch((error) => setErrors({ apiError: error }));
+  return store.dispatch('auth/login',{username: username.value, password: password.value}).catch((error) => {
+    console.log(error);
+    setErrors({ apiError: error })
+  });
 }
 </script>
 

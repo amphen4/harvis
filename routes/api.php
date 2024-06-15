@@ -21,7 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 Route::post('/login', function (Request $request) {
     if (!Auth::attempt($request->only('email', 'password'))) {
-        return response(['message' => __('auth.failed')], 422);
+        return response(['message' => 'Sus credenciales ingresadas son incorrectas o no existen'], 422);
     }
     $expirationTime = now()->addHours(6);
     $token = auth()->user()->createToken('client', ['store-account'], $expirationTime);

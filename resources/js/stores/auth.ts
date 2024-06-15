@@ -24,6 +24,7 @@ const auth = {
   actions: {
     async login({ commit, state }, payload) {
       const user = await fetchWrapper.post(`${baseUrl}/api/login`, { email: payload.username, password: payload.password });
+      console.log('user', user);
       commit('setUser', user);
       // store user details and jwt in local storage to keep user logged in between page refreshes
       localStorage.setItem('user', JSON.stringify(user));
@@ -33,7 +34,7 @@ const auth = {
     logout({ commit }) {
       commit('setUser', null);
       localStorage.removeItem('user');
-      //router.push('/auth/login');
+      router.push('/auth/login');
     }
   }
 };

@@ -1,6 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 import MainRoutes from './MainRoutes';
 import AuthRoutes from './AuthRoutes';
+import { useStore } from 'vuex'
 //import { useAuthStore } from '@/stores/auth';
 //import { useUIStore } from '@/stores/ui';
 
@@ -33,20 +34,23 @@ interface AuthStore {
 
 router.beforeEach(async (to, from, next) => {
   // redirect to login page if not logged in and trying to access a restricted page
+  console.log('to.path', to.path);
   const publicPages = ['/auth/login'];
   const authRequired = !publicPages.includes(to.path);
-  //const auth: AuthStore = useAuthStore();
-  next();
-  /*
+  const store = useStore();
+  const authStoreState = store.state.auth;
+
+  //next();
+  
   if (to.matched.some((record) => record.meta.requiresAuth)) {
-    if (authRequired && !auth.user) {
-      auth.returnUrl = to.fullPath;
+    if ( authRequired && (!authStoreState.user || (new Date()) >= (new Date(authStoreState.user.expiration_date))) ) {
+      //authStore.returnUrl = to.fullPath;
       return next('/auth/login');
     } else next();
   } else {
     next();
   }
-  */
+  
 });
 
 router.beforeEach(() => {

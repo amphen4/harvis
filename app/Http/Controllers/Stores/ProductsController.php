@@ -11,7 +11,7 @@ class ProductsController extends Controller
 
         return response()->json([
             'data' => [
-                ['stock' => 1, 'name' => 'Nombre Producto']
+                ['products_id' => 1, 'stock' => 1, 'name' => 'Nombre Producto']
             ],
             'status' => 1
         ]);

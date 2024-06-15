@@ -1,5 +1,6 @@
-import { useStore } from 'vuex';
+import store from '@/stores';
 
+//console.log('import store ql', store);
 export const fetchWrapper = {
   get: request('GET'),
   post: request('POST'),
@@ -27,11 +28,13 @@ function request(method: string) {
 function authHeader(url: string) {
   // return auth header with jwt if user is logged in and request is to the api url
   //const store = useStore();
+  
   const  user  = JSON.parse(localStorage.getItem('user'));
-  const isLoggedIn = !!user?.state?.expiration_date && (new Date(user.state.expiration_date)) <= (new Date());
+  const isLoggedIn = !!user?.expiration_date && (new Date(user.expiration_date)) > (new Date());
   const isApiUrl = url.startsWith('http://localhost:8000/api');
   if (isLoggedIn && isApiUrl) {
-    return { Authorization: `Bearer ${user.state.token}` };
+    console.log('le agregare el bearer token');
+    return { Authorization: `Bearer ${user.token}` };
   } else {
     return {};
   }
@@ -42,11 +45,12 @@ function handleResponse(response: any) {
     const data = text && JSON.parse(text);
 
     if (!response.ok) {
-      const store = useStore();
-      const { user, logout } = store.state.auth;
+      const { user } = store.state.auth;
       if ([401, 403].includes(response.status) && user) {
         // auto logout if 401 Unauthorized or 403 Forbidden response returned from api
-        logout();
+        console.log('401 o 403 -> logout()');
+        store.dispatch('auth/logout');
+        
       }
 
       const error = (data && data.message) || response.statusText;

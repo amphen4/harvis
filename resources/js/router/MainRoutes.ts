@@ -1,7 +1,7 @@
 const MainRoutes = {
   path: '/main',
   meta: {
-    requiresAuth: false
+    requiresAuth: true
   },
   redirect: '/main',
   component: () => import('@/layouts/dashboard/DashboardLayout.vue'),
