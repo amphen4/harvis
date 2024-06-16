@@ -17,6 +17,7 @@ import { useStore } from 'vuex';
 
 const tab = ref(null);
 const store = useStore();
+//console.log('store de UseSTore PRfileDD', store.state.auth.user);
 </script>
 
 <template>
@@ -29,7 +30,7 @@ const store = useStore();
         <img src="@/assets/images/users/avatar-1.png" width="32" alt="Julia" />
       </v-avatar>
       <div>
-        <h6 class="text-h6 mb-0">JWT User</h6>
+        <h6 class="text-h6 mb-0">{{ store.state.auth.user.name }}</h6>
         <p class="text-caption mb-0">UI/UX Designer</p>
       </div>
       <div class="ml-auto">
@@ -39,8 +40,8 @@ const store = useStore();
       </div>
     </div>
     <v-tabs v-model="tab" color="primary" grow>
-      <v-tab value="111"> <UserOutlined class="v-icon--start" /> Profile </v-tab>
-      <v-tab value="222"> <SettingOutlined class="v-icon--start" /> Setting </v-tab>
+      <v-tab value="111"> <UserOutlined class="v-icon--start" /> Mi cuenta </v-tab>
+      <v-tab value="222"> <SettingOutlined class="v-icon--start" /> Configuraciones </v-tab>
     </v-tabs>
     <perfect-scrollbar style="height: calc(100vh - 300px); max-height: 240px">
       <v-window v-model="tab">
@@ -83,7 +84,7 @@ const store = useStore();
                 <LogoutOutlined :style="{ fontSize: '14px' }" class="mr-4" />
               </template>
 
-              <v-list-item-title class="text-subtitle-2"> Logout</v-list-item-title>
+              <v-list-item-title class="text-subtitle-2"> Cerrar sesión</v-list-item-title>
             </v-list-item>
           </v-list>
         </v-window-item>

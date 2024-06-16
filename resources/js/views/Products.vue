@@ -14,9 +14,12 @@ const breadcrumbs = shallowRef([
   }
 ]);
 const productsTableHeaders = ref([
-    {title: 'ID', value: 'products_id'}, //value o key?
-    {title: 'Producto', value: 'name'},
-    {title: 'Stock', value: 'stock'}
+    //{title: 'ID', value: 'products_id'}, //value o key?
+    {title: 'SKU', value: 'sku'},
+    {title: 'Nombre Producto', value: 'name'},
+    {title: 'Marketplaces', value: 'marketplaces'},
+    {title: 'Precio', value: 'price'},
+    {title: '', value: 'options'},
 ])
 const productsTableData = ref([]);
 const loadingTable = ref(false);
@@ -31,7 +34,45 @@ onMounted(async () => {
   <v-row>
     <v-col cols="12" md="12">
       <v-data-table :headers="productsTableHeaders" :loading="loadingTable" :items="productsTableData">
+        <template v-slot:item.options="{ }">
+          <v-menu>
+            <template v-slot:activator="{ props }">
+              <v-btn
+                color="primary"
+                variant="plain"
+                append-icon="mdi-dots-vertical"
+                v-bind="props"
+              >
+                Opciones
+              </v-btn>
+            </template>
 
+            <v-list density="compact">
+              <v-list-item :link="true">
+                <v-list-item-title>Ver detalles</v-list-item-title>
+                <template v-slot:append>
+                  <v-icon>mdi-eye</v-icon>
+                </template>
+              </v-list-item>
+              <v-list-item :link="true">
+                <v-list-item-title>Eliminar</v-list-item-title>
+                <template v-slot:append>
+                  <v-icon>mdi-delete</v-icon>
+                </template>
+              </v-list-item>
+            </v-list>
+          </v-menu>
+        </template>
+        <template v-slot:item.marketplaces="{ item }">
+          <div style="display: flex; justify-content: start;">
+            <v-avatar size="16px" v-for="(logo_path,i) in item.logos_marketplaces.split(',')" :key="i+logo_path">
+              <v-img
+                :src="logo_path"
+              ></v-img>
+            </v-avatar>
+            
+          </div>
+        </template>
       </v-data-table>
     </v-col>
   </v-row>

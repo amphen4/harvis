@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id('marketplaces_id');
             $table->string('name');
             $table->string('connector_class_name');
+            $table->text('logo_path')->nullable();
             $table->timestamps();
         });
     }

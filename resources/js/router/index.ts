@@ -7,6 +7,7 @@ import { useStore } from 'vuex'
 
 export const router = createRouter({
   history: createWebHashHistory(),
+  
   routes: [
     {
       path: '/:pathMatch(.*)*',

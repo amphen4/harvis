@@ -24,8 +24,9 @@ Route::post('/login', function (Request $request) {
         return response(['message' => 'Sus credenciales ingresadas son incorrectas o no existen'], 422);
     }
     $expirationTime = now()->addHours(6);
-    $token = auth()->user()->createToken('client', ['store-account'], $expirationTime);
-    return ['token' => $token->plainTextToken, 'expiration_date' => $expirationTime->toISOString()];
+    $user = auth()->user();
+    $token = $user->createToken('client', ['store-account'], $expirationTime);
+    return ['token' => $token->plainTextToken, 'expiration_date' => $expirationTime->toISOString(), 'name' => $user->name];
 });
 
 Route::middleware('auth:sanctum')->group(function(){

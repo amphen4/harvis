@@ -4,6 +4,8 @@ import * as components from 'vuetify/components';
 import * as directives from 'vuetify/directives';
 import { DefaultTheme } from '@/theme/LightTheme';
 
+import { es } from 'vuetify/locale'
+
 export default createVuetify({
   components,
   directives,
@@ -26,5 +28,9 @@ export default createVuetify({
       // set v-tooltip default location to top
       location: 'top'
     }
-  }
+  },
+  locale: {
+    locale: 'es',
+    messages: { es },
+  },
 });
