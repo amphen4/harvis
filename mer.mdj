@@ -328,13 +328,28 @@
 											"top": 690,
 											"width": 163.79345703125,
 											"height": 13
+										},
+										{
+											"_type": "ERDColumnView",
+											"_id": "AAAAAAGQIwjeUHeKaQ8=",
+											"_parent": {
+												"$ref": "AAAAAAGP4wY4gAzPAdc="
+											},
+											"model": {
+												"$ref": "AAAAAAGQIwjeRneHCT8="
+											},
+											"font": "Arial;13;0",
+											"left": 1093,
+											"top": 705,
+											"width": 163.79345703125,
+											"height": 13
 										}
 									],
 									"font": "Arial;13;0",
 									"left": 1088,
 									"top": 655,
 									"width": 173.79345703125,
-									"height": 53
+									"height": 68
 								}
 							],
 							"font": "Arial;13;0",
@@ -3931,6 +3946,15 @@
 								"$ref": "AAAAAAGP4wY4fwzLDFk="
 							},
 							"name": "connector_class_name",
+							"length": 0
+						},
+						{
+							"_type": "ERDColumn",
+							"_id": "AAAAAAGQIwjeRneHCT8=",
+							"_parent": {
+								"$ref": "AAAAAAGP4wY4fwzLDFk="
+							},
+							"name": "logo_path",
 							"length": 0
 						}
 					]
