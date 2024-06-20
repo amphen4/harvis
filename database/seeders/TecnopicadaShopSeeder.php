@@ -83,5 +83,35 @@ class TecnopicadaShopSeeder extends Seeder
                 break;
             }
         }
+
+        /** Configuraciones Walmart CL */
+        $walmartCLMarketplace = Marketplace::where('name','Walmart CL')->first();
+        $shop->marketplaces()->sync( [ $walmartCLMarketplace->marketplaces_id => ['shop_alias' => 'Tecnopicada Gadgetshop'] ] );
+        $shop->save();
+
+        $walmartCLMarketplaceConfigs = MarketplaceConfig::where('marketplace_id',$walmartCLMarketplace->marketplaces_id)->get();
+        foreach( $walmartCLMarketplaceConfigs as $walmartCLMarketplaceConfig ){
+            if( DB::table('shop_marketplace_configs')->where('shop_id',$shop->shops_id)->where('marketplace_config_id',$walmartCLMarketplaceConfig->marketplace_configs_id)->count() ){
+                continue;
+            }
+            switch( $walmartCLMarketplaceConfig->name ){
+                case 'ClientId':
+                    DB::table('shop_marketplace_configs')->insert([
+                        'marketplace_config_id' => $walmartCLMarketplaceConfig->marketplace_configs_id,
+                        'shop_id' => $shop->shops_id,
+                        'value' => json_encode("00c950e1-7a78-4192-adfa-fc6078d93f76"),
+                    ]);
+                break;
+                case 'ClientSecret':
+                    DB::table('shop_marketplace_configs')->insert([
+                        'marketplace_config_id' => $walmartCLMarketplaceConfig->marketplace_configs_id,
+                        'shop_id' => $shop->shops_id,
+                        'value' => json_encode("O8NeNPfjYmytgwSgDqKhN-WcX49FcSJmQZc06uNZPKD1AwhaQzCf1zCioJRuyv-hCRQl91CEZIgjP-XOdSv3mQ"),
+                    ]);
+                break;
+                default:
+                break;
+            }
+        }
     }
 }

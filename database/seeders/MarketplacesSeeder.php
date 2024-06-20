@@ -53,5 +53,23 @@ class MarketplacesSeeder extends Seeder
             }
         }
 
+        if( !Marketplace::where('name','Walmart CL')->count() ){
+            $marketplace_WalmartCL = new Marketplace();
+            $marketplace_WalmartCL->connector_class_name = 'Walmart CL';
+            $marketplace_WalmartCL->name = 'Walmart CL';
+            $marketplace_WalmartCL->save();
+        }else{
+            $marketplace_WalmartCL = Marketplace::where('name','Walmart CL')->first();
+        }
+        $paris_name_configs_array = [
+            'ClientId',
+            'ClientSecret',
+        ];
+        foreach( $paris_name_configs_array as $name_config ){
+            if( !MarketplaceConfig::where('name', $name_config)->where('marketplace_id',$marketplace_WalmartCL->marketplaces_id)->count() ){
+                MarketplaceConfig::create(['name' => $name_config, 'marketplace_id' => $marketplace_WalmartCL->marketplaces_id]);
+            }
+        }
+
     }
 }
