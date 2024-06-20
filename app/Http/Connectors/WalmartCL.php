@@ -51,7 +51,7 @@ class WalmartCL {
             }else{
                 $this->shopConfigsData['AccessToken'] = $json->accessToken;
             }
-            $headers = array_merge($headers, [ 'Authorization' => 'Bearer '.$this->shopConfigsData['AccessToken'] ]);
+            $headers = array_merge($headers, [ 'WM_SEC.ACCESS_TOKEN' => $this->shopConfigsData['AccessToken'], 'WM_QOS.CORRELATION_ID' => $this->generateUuid4() ]);
             \Log::info( json_encode([
                 'method' => $method,
                 'uri' => $uri,
@@ -80,13 +80,18 @@ class WalmartCL {
         $uri = $this::API_BASE_URL.'/v3/token';
         $clientId = $this->shopConfigsData['clientId'];
         $clientSecret = $this->shopConfigsData['clientSecret'];
-        
+        $uuidv4 = $this->generateUuid4();
+        $authorization = base64_encode( $clientId.':'.$clientSecret );
         $response = Http::withHeaders([
-            'Authorization' => "Basic $bearerToken",
-        ])->withoutVerifying()->post($uri);
+            'Authorization' => "Basic $authorization",
+            "WM_QOS.CORRELATION_ID" => $uuidv4,
+            "WM_MARKET" => "cl",
+            "WM_SVC.NAME" => "Walmart Marketplace",
+            "Accept" => "application/json"
+        ])->asForm()->withoutVerifying()->post($uri, ['grant_type' => 'client_credentials']);
         if( $response ){
             $jsonResponse = json_decode($response);
-            if( $jsonResponse && property_exists($jsonResponse, 'expiresIn') && property_exists($jsonResponse, 'accessToken') ){
+            if( $jsonResponse && property_exists($jsonResponse, 'expires_in') && property_exists($jsonResponse, 'access_token') ){
                 $fechaExpiracionToken = $now->addSeconds( intval($jsonResponse->expiresIn) )->toIso8601String();
                 $accessToken = $jsonResponse->accessToken;
                 Storage::put('http/'.$this->shop->shops_id.'_'.$this->marketplace->marketplaces_id.'.json', json_encode(['expirationDate' => $fechaExpiracionToken, 'accessToken' => $accessToken]));
@@ -95,6 +100,16 @@ class WalmartCL {
             }
         }
         throw new Error("Problemas para autenticarse en Paris Marketplace");
+    }
+    function generateUuid4() {
+        $randomBytes = bin2hex(random_bytes(16));
+        return sprintf("%s-%s-%s-%s-%s",
+            substr($randomBytes, 0, 8),
+            substr($randomBytes, 8, 4),
+            substr($randomBytes, 12, 4),
+            substr($randomBytes, 16, 4),
+            substr($randomBytes, 20)
+        );
     }
     public function getProducts($queryParams = [])
     {
