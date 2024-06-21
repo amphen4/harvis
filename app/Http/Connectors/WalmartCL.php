@@ -51,7 +51,11 @@ class WalmartCL {
             }else{
                 $this->shopConfigsData['AccessToken'] = $json->accessToken;
             }
-            $headers = array_merge($headers, [ 'WM_SEC.ACCESS_TOKEN' => $this->shopConfigsData['AccessToken'], 'WM_QOS.CORRELATION_ID' => $this->generateUuid4() ]);
+            $headers = array_merge($headers, [ 
+                'WM_SEC.ACCESS_TOKEN' => $this->shopConfigsData['AccessToken'], 
+                'WM_QOS.CORRELATION_ID' => $this->generateUuid4(),
+                'Accept' => 'application/json'
+            ]);
             \Log::info( json_encode([
                 'method' => $method,
                 'uri' => $uri,
@@ -64,7 +68,7 @@ class WalmartCL {
                 if( $body ){
                     return Http::withHeaders($headers)->withoutVerifying()->post($uri);
                 }else{
-                    return Http::withHeaders($headers)->withoutVerifying()->withBody($body)->post($uri);
+                    return Http::withHeaders($headers)->withoutVerifying()->asForm()->post($uri, $body);
                 }
                 
             }else{
@@ -102,18 +106,16 @@ class WalmartCL {
         throw new Error("Problemas para autenticarse en Paris Marketplace");
     }
     function generateUuid4() {
-        $randomBytes = bin2hex(random_bytes(16));
-        return sprintf("%s-%s-%s-%s-%s",
-            substr($randomBytes, 0, 8),
-            substr($randomBytes, 8, 4),
-            substr($randomBytes, 12, 4),
-            substr($randomBytes, 16, 4),
-            substr($randomBytes, 20)
-        );
+        $data = random_bytes(16);
+
+        $data[6] = chr(ord($data[6]) & 0x0f | 0x40); // set version to 0100
+        $data[8] = chr(ord($data[8]) & 0x3f | 0x80); // set bits 6-7 to 10
+            
+        return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4));
     }
     public function getProducts($queryParams = [])
     {
-        $uri = $this::API_BASE_URL . '/v2/products/search';
+        $uri = $this::API_BASE_URL . '/v3/items';
         if( count($queryParams) ){
             $c = 0;
             foreach( $queryParams as $key => $value ){
