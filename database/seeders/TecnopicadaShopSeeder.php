@@ -26,7 +26,7 @@ class TecnopicadaShopSeeder extends Seeder
         
         /** Configuraciones Falabella */
         $falabellaMarketplace = Marketplace::where('name','Falabella')->first();
-        $shop->marketplaces()->sync( [ $falabellaMarketplace->marketplaces_id => ['shop_alias' => 'TECNOPICADA GADGETSHOP'] ] );
+        $shop->marketplaces()->syncWithoutDetaching( [ $falabellaMarketplace->marketplaces_id => ['shop_alias' => 'TECNOPICADA GADGETSHOP'] ] );
         $shop->save();
 
         $falabellaMarketplaceConfigs = MarketplaceConfig::where('marketplace_id',$falabellaMarketplace->marketplaces_id)->get();
@@ -63,7 +63,7 @@ class TecnopicadaShopSeeder extends Seeder
 
         /** Configuraciones Paris */
         $parisMarketplace = Marketplace::where('name','Paris')->first();
-        $shop->marketplaces()->sync( [ $parisMarketplace->marketplaces_id => ['shop_alias' => 'Tecnopicada Gadgetshop'] ] );
+        $shop->marketplaces()->syncWithoutDetaching( [ $parisMarketplace->marketplaces_id => ['shop_alias' => 'Tecnopicada Gadgetshop'] ] );
         $shop->save();
 
         $parisMarketplaceConfigs = MarketplaceConfig::where('marketplace_id',$parisMarketplace->marketplaces_id)->get();
@@ -86,7 +86,7 @@ class TecnopicadaShopSeeder extends Seeder
 
         /** Configuraciones Walmart CL */
         $walmartCLMarketplace = Marketplace::where('name','Walmart CL')->first();
-        $shop->marketplaces()->sync( [ $walmartCLMarketplace->marketplaces_id => ['shop_alias' => 'Tecnopicada Gadgetshop'] ] );
+        $shop->marketplaces()->syncWithoutDetaching( [ $walmartCLMarketplace->marketplaces_id => ['shop_alias' => 'Tecnopicada Gadgetshop'] ] );
         $shop->save();
 
         $walmartCLMarketplaceConfigs = MarketplaceConfig::where('marketplace_id',$walmartCLMarketplace->marketplaces_id)->get();

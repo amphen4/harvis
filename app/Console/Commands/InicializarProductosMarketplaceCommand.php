@@ -4,8 +4,10 @@ namespace App\Console\Commands;
 
 use App\DataTranslators\Falabella as DataTranslatorsFalabella;
 use App\DataTranslators\Paris as DataTranslatorsParis;
+use App\DataTranslators\WalmartCL as DataTranslatorWalmartCL;
 use App\Http\Connectors\Falabella;
 use App\Http\Connectors\Paris;
+use App\Http\Connectors\WalmartCL;
 use App\Models\Marketplace;
 use App\Models\Product;
 use App\Models\ProductVariant;
@@ -131,6 +133,54 @@ class InicializarProductosMarketplaceCommand extends Command
                                 }
                             }
                         }
+                    }
+                    
+                }
+                
+            }
+        }
+        if( $marketplace->name == 'Walmart CL' ){
+            
+            $serviceConnector = new WalmartCL($marketplace, $shop);
+            $productosMarketplace = [];
+            // Paginación
+            $prices = 'true';
+            $offset = 0;
+            $limit = 20;
+            $json_response = $serviceConnector->getProducts([
+                'offset' => $offset,
+                'limit' => $limit
+            ]);
+            if(
+                $json_response &&
+                intval($json_response->totalItems)
+            ){
+                while( true ){
+                    $productosMarketplace = array_merge($productosMarketplace, $json_response->ItemResponse);
+                    $offset += $limit;
+                    if( $offset >= intval($json_response->totalItems) ){
+                        break;
+                    }
+                    $json_response = $serviceConnector->getProducts([
+                        'offset' => $offset,
+                        'limit' => $limit
+                    ]);
+                }
+                foreach( $productosMarketplace as $productoMarketplace ){
+                    $dataTranslated = DataTranslatorWalmartCL::translateProduct( $productoMarketplace );
+                    $dataProduct = array_merge($dataTranslated, [
+                        'shop_id' => $shop->shops_id, 
+                        'marketplace_id' => $marketplace->marketplaces_id,
+                        'created_at' => (new Carbon)->toDateTimeString(),
+                        'updated_at' => (new Carbon)->toDateTimeString()
+                    ]);
+                    if( !Product::where('shop_id', $shop->shops_id)
+                        ->where('marketplace_id', $marketplace->marketplaces_id)
+                        ->where('sku', $dataTranslated['sku'])
+                        ->count() 
+                    ){
+                        $product = Product::create( $dataProduct );
+                        $contadorProductosCreados++;
                     }
                     
                 }

@@ -82,8 +82,8 @@ class WalmartCL {
     public function auth (){
         $now = new Carbon();
         $uri = $this::API_BASE_URL.'/v3/token';
-        $clientId = $this->shopConfigsData['clientId'];
-        $clientSecret = $this->shopConfigsData['clientSecret'];
+        $clientId = $this->shopConfigsData['ClientId'];
+        $clientSecret = $this->shopConfigsData['ClientSecret'];
         $uuidv4 = $this->generateUuid4();
         $authorization = base64_encode( $clientId.':'.$clientSecret );
         $response = Http::withHeaders([
@@ -96,8 +96,8 @@ class WalmartCL {
         if( $response ){
             $jsonResponse = json_decode($response);
             if( $jsonResponse && property_exists($jsonResponse, 'expires_in') && property_exists($jsonResponse, 'access_token') ){
-                $fechaExpiracionToken = $now->addSeconds( intval($jsonResponse->expiresIn) )->toIso8601String();
-                $accessToken = $jsonResponse->accessToken;
+                $fechaExpiracionToken = $now->addSeconds( intval($jsonResponse->expires_in) )->toIso8601String();
+                $accessToken = $jsonResponse->access_token;
                 Storage::put('http/'.$this->shop->shops_id.'_'.$this->marketplace->marketplaces_id.'.json', json_encode(['expirationDate' => $fechaExpiracionToken, 'accessToken' => $accessToken]));
                 $this->shopConfigsData['AccessToken'] = $accessToken;
                 return;
@@ -128,7 +128,7 @@ class WalmartCL {
             }
         }
         
-        $response = $this->makeRequest('GET', $uri, null, []);
+        $response = $this->makeRequest('GET', $uri, null, ['WM_SVC.NAME' => 'Walmart Service Name', 'WM_MARKET' => 'cl']);
 
         return json_decode( $response );
     }
