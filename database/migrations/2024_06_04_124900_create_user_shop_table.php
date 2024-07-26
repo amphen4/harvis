@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id');
             $table->foreignId('shop_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('shop_id')->references('shop_id')->on('shops');
+            $table->foreign('shop_id')->references('shops_id')->on('shops');
             $table->timestamps();
         });
     }
