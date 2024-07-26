@@ -1,0 +1,425 @@
+{
+  "_AuthFooter.vue_vue_type_script_setup_true_lang-Dqoi0Ez4.js": {
+    "file": "assets/AuthFooter.vue_vue_type_script_setup_true_lang-Dqoi0Ez4.js",
+    "name": "AuthFooter.vue_vue_type_script_setup_true_lang",
+    "imports": [
+      "resources/js/main.ts"
+    ]
+  },
+  "_BaseBreadcrumb.vue_vue_type_style_index_0_lang-!~{00j}~.js": {
+    "file": "assets/BaseBreadcrumb-BVdSh830.css",
+    "src": "_BaseBreadcrumb.vue_vue_type_style_index_0_lang-!~{00j}~.js"
+  },
+  "_BaseBreadcrumb.vue_vue_type_style_index_0_lang-BPm7N06X.js": {
+    "file": "assets/BaseBreadcrumb.vue_vue_type_style_index_0_lang-BPm7N06X.js",
+    "name": "BaseBreadcrumb.vue_vue_type_style_index_0_lang",
+    "imports": [
+      "resources/js/main.ts"
+    ],
+    "css": [
+      "assets/BaseBreadcrumb-BVdSh830.css"
+    ]
+  },
+  "_LoaderWrapper-!~{00g}~.js": {
+    "file": "assets/LoaderWrapper-DNP5Vw98.css",
+    "src": "_LoaderWrapper-!~{00g}~.js"
+  },
+  "_LoaderWrapper-C7zliHg3.js": {
+    "file": "assets/LoaderWrapper-C7zliHg3.js",
+    "name": "LoaderWrapper",
+    "imports": [
+      "resources/js/main.ts",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ],
+    "css": [
+      "assets/LoaderWrapper-DNP5Vw98.css"
+    ]
+  },
+  "_LogoDark.vue_vue_type_script_setup_true_lang-B7NJZ4pg.js": {
+    "file": "assets/LogoDark.vue_vue_type_script_setup_true_lang-B7NJZ4pg.js",
+    "name": "LogoDark.vue_vue_type_script_setup_true_lang",
+    "imports": [
+      "resources/js/main.ts"
+    ]
+  },
+  "_UiParentCard.vue_vue_type_script_setup_true_lang-DWz11F82.js": {
+    "file": "assets/UiParentCard.vue_vue_type_script_setup_true_lang-DWz11F82.js",
+    "name": "UiParentCard.vue_vue_type_script_setup_true_lang",
+    "imports": [
+      "resources/js/main.ts"
+    ]
+  },
+  "__plugin-vue_export-helper-DlAUqK2U.js": {
+    "file": "assets/_plugin-vue_export-helper-DlAUqK2U.js",
+    "name": "_plugin-vue_export-helper"
+  },
+  "_avatar-1-BVX2dPZX.js": {
+    "file": "assets/avatar-1-BVX2dPZX.js",
+    "name": "avatar-1",
+    "imports": [
+      "resources/js/main.ts"
+    ],
+    "assets": [
+      "assets/avatar-1-Vzw-Lq1t.png"
+    ]
+  },
+  "node_modules/@fontsource/public-sans/files/public-sans-latin-400-normal.woff": {
+    "file": "assets/public-sans-latin-400-normal-D4vgG6SW.woff",
+    "src": "node_modules/@fontsource/public-sans/files/public-sans-latin-400-normal.woff"
+  },
+  "node_modules/@fontsource/public-sans/files/public-sans-latin-400-normal.woff2": {
+    "file": "assets/public-sans-latin-400-normal-D4F9yfFi.woff2",
+    "src": "node_modules/@fontsource/public-sans/files/public-sans-latin-400-normal.woff2"
+  },
+  "node_modules/@fontsource/public-sans/files/public-sans-latin-500-normal.woff": {
+    "file": "assets/public-sans-latin-500-normal-DCQow-rA.woff",
+    "src": "node_modules/@fontsource/public-sans/files/public-sans-latin-500-normal.woff"
+  },
+  "node_modules/@fontsource/public-sans/files/public-sans-latin-500-normal.woff2": {
+    "file": "assets/public-sans-latin-500-normal-ChZcBEnJ.woff2",
+    "src": "node_modules/@fontsource/public-sans/files/public-sans-latin-500-normal.woff2"
+  },
+  "node_modules/@fontsource/public-sans/files/public-sans-latin-600-normal.woff": {
+    "file": "assets/public-sans-latin-600-normal-BX0BwxVl.woff",
+    "src": "node_modules/@fontsource/public-sans/files/public-sans-latin-600-normal.woff"
+  },
+  "node_modules/@fontsource/public-sans/files/public-sans-latin-600-normal.woff2": {
+    "file": "assets/public-sans-latin-600-normal-Ck6TyfRI.woff2",
+    "src": "node_modules/@fontsource/public-sans/files/public-sans-latin-600-normal.woff2"
+  },
+  "node_modules/@fontsource/public-sans/files/public-sans-latin-700-normal.woff": {
+    "file": "assets/public-sans-latin-700-normal-DFbs-ESy.woff",
+    "src": "node_modules/@fontsource/public-sans/files/public-sans-latin-700-normal.woff"
+  },
+  "node_modules/@fontsource/public-sans/files/public-sans-latin-700-normal.woff2": {
+    "file": "assets/public-sans-latin-700-normal-CGjRhW-d.woff2",
+    "src": "node_modules/@fontsource/public-sans/files/public-sans-latin-700-normal.woff2"
+  },
+  "node_modules/@fontsource/public-sans/files/public-sans-latin-ext-400-normal.woff": {
+    "file": "assets/public-sans-latin-ext-400-normal-BwKz5AeH.woff",
+    "src": "node_modules/@fontsource/public-sans/files/public-sans-latin-ext-400-normal.woff"
+  },
+  "node_modules/@fontsource/public-sans/files/public-sans-latin-ext-400-normal.woff2": {
+    "file": "assets/public-sans-latin-ext-400-normal-L5ZQyZX_.woff2",
+    "src": "node_modules/@fontsource/public-sans/files/public-sans-latin-ext-400-normal.woff2"
+  },
+  "node_modules/@fontsource/public-sans/files/public-sans-latin-ext-500-normal.woff": {
+    "file": "assets/public-sans-latin-ext-500-normal-DC3-YAa0.woff",
+    "src": "node_modules/@fontsource/public-sans/files/public-sans-latin-ext-500-normal.woff"
+  },
+  "node_modules/@fontsource/public-sans/files/public-sans-latin-ext-500-normal.woff2": {
+    "file": "assets/public-sans-latin-ext-500-normal-DP9Whp7X.woff2",
+    "src": "node_modules/@fontsource/public-sans/files/public-sans-latin-ext-500-normal.woff2"
+  },
+  "node_modules/@fontsource/public-sans/files/public-sans-latin-ext-600-normal.woff": {
+    "file": "assets/public-sans-latin-ext-600-normal-WBZG7A5n.woff",
+    "src": "node_modules/@fontsource/public-sans/files/public-sans-latin-ext-600-normal.woff"
+  },
+  "node_modules/@fontsource/public-sans/files/public-sans-latin-ext-600-normal.woff2": {
+    "file": "assets/public-sans-latin-ext-600-normal-BOqTAvMD.woff2",
+    "src": "node_modules/@fontsource/public-sans/files/public-sans-latin-ext-600-normal.woff2"
+  },
+  "node_modules/@fontsource/public-sans/files/public-sans-latin-ext-700-normal.woff": {
+    "file": "assets/public-sans-latin-ext-700-normal-BPjagB3u.woff",
+    "src": "node_modules/@fontsource/public-sans/files/public-sans-latin-ext-700-normal.woff"
+  },
+  "node_modules/@fontsource/public-sans/files/public-sans-latin-ext-700-normal.woff2": {
+    "file": "assets/public-sans-latin-ext-700-normal-DQeElHWA.woff2",
+    "src": "node_modules/@fontsource/public-sans/files/public-sans-latin-ext-700-normal.woff2"
+  },
+  "node_modules/@fontsource/public-sans/files/public-sans-vietnamese-400-normal.woff": {
+    "file": "assets/public-sans-vietnamese-400-normal-BwEUXHEY.woff",
+    "src": "node_modules/@fontsource/public-sans/files/public-sans-vietnamese-400-normal.woff"
+  },
+  "node_modules/@fontsource/public-sans/files/public-sans-vietnamese-400-normal.woff2": {
+    "file": "assets/public-sans-vietnamese-400-normal-fzCEYZwl.woff2",
+    "src": "node_modules/@fontsource/public-sans/files/public-sans-vietnamese-400-normal.woff2"
+  },
+  "node_modules/@fontsource/public-sans/files/public-sans-vietnamese-500-normal.woff": {
+    "file": "assets/public-sans-vietnamese-500-normal-BKNWXH7D.woff",
+    "src": "node_modules/@fontsource/public-sans/files/public-sans-vietnamese-500-normal.woff"
+  },
+  "node_modules/@fontsource/public-sans/files/public-sans-vietnamese-500-normal.woff2": {
+    "file": "assets/public-sans-vietnamese-500-normal-sPpfk_yB.woff2",
+    "src": "node_modules/@fontsource/public-sans/files/public-sans-vietnamese-500-normal.woff2"
+  },
+  "node_modules/@fontsource/public-sans/files/public-sans-vietnamese-600-normal.woff": {
+    "file": "assets/public-sans-vietnamese-600-normal-CCLjVCWZ.woff",
+    "src": "node_modules/@fontsource/public-sans/files/public-sans-vietnamese-600-normal.woff"
+  },
+  "node_modules/@fontsource/public-sans/files/public-sans-vietnamese-600-normal.woff2": {
+    "file": "assets/public-sans-vietnamese-600-normal-BoVp2IRl.woff2",
+    "src": "node_modules/@fontsource/public-sans/files/public-sans-vietnamese-600-normal.woff2"
+  },
+  "node_modules/@fontsource/public-sans/files/public-sans-vietnamese-700-normal.woff": {
+    "file": "assets/public-sans-vietnamese-700-normal-Czg5uTnZ.woff",
+    "src": "node_modules/@fontsource/public-sans/files/public-sans-vietnamese-700-normal.woff"
+  },
+  "node_modules/@fontsource/public-sans/files/public-sans-vietnamese-700-normal.woff2": {
+    "file": "assets/public-sans-vietnamese-700-normal-Cjcf1M5d.woff2",
+    "src": "node_modules/@fontsource/public-sans/files/public-sans-vietnamese-700-normal.woff2"
+  },
+  "node_modules/@mdi/font/fonts/materialdesignicons-webfont.eot": {
+    "file": "assets/materialdesignicons-webfont-CSr8KVlo.eot",
+    "src": "node_modules/@mdi/font/fonts/materialdesignicons-webfont.eot"
+  },
+  "node_modules/@mdi/font/fonts/materialdesignicons-webfont.ttf": {
+    "file": "assets/materialdesignicons-webfont-B7mPwVP_.ttf",
+    "src": "node_modules/@mdi/font/fonts/materialdesignicons-webfont.ttf"
+  },
+  "node_modules/@mdi/font/fonts/materialdesignicons-webfont.woff": {
+    "file": "assets/materialdesignicons-webfont-PXm3-2wK.woff",
+    "src": "node_modules/@mdi/font/fonts/materialdesignicons-webfont.woff"
+  },
+  "node_modules/@mdi/font/fonts/materialdesignicons-webfont.woff2": {
+    "file": "assets/materialdesignicons-webfont-Dp5v-WZN.woff2",
+    "src": "node_modules/@mdi/font/fonts/materialdesignicons-webfont.woff2"
+  },
+  "resources/css/app.css": {
+    "file": "assets/app-l0sNRNKZ.js",
+    "name": "app",
+    "src": "resources/css/app.css",
+    "isEntry": true
+  },
+  "resources/js/assets/images/maintenance/Error404.png": {
+    "file": "assets/Error404-AdsfEbqB.png",
+    "src": "resources/js/assets/images/maintenance/Error404.png"
+  },
+  "resources/js/assets/images/maintenance/TwoCone.png": {
+    "file": "assets/TwoCone-5iyjn531.png",
+    "src": "resources/js/assets/images/maintenance/TwoCone.png"
+  },
+  "resources/js/assets/images/users/avatar-1.png": {
+    "file": "assets/avatar-1-Vzw-Lq1t.png",
+    "src": "resources/js/assets/images/users/avatar-1.png"
+  },
+  "resources/js/assets/images/users/avatar-2.png": {
+    "file": "assets/avatar-2-BZ1MRvxs.png",
+    "src": "resources/js/assets/images/users/avatar-2.png"
+  },
+  "resources/js/assets/images/users/avatar-3.png": {
+    "file": "assets/avatar-3-CS5upe5Z.png",
+    "src": "resources/js/assets/images/users/avatar-3.png"
+  },
+  "resources/js/assets/images/users/avatar-4.png": {
+    "file": "assets/avatar-4-DdPPA4yP.png",
+    "src": "resources/js/assets/images/users/avatar-4.png"
+  },
+  "resources/js/assets/images/users/avatar-group.png": {
+    "file": "assets/avatar-group-Bilj_Kis.png",
+    "src": "resources/js/assets/images/users/avatar-group.png"
+  },
+  "resources/js/layouts/blank/BlankLayout.vue": {
+    "file": "assets/BlankLayout-DFxMf5-b.js",
+    "name": "BlankLayout",
+    "src": "resources/js/layouts/blank/BlankLayout.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/main.ts",
+      "_LoaderWrapper-C7zliHg3.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "resources/js/layouts/dashboard/DashboardLayout.vue": {
+    "file": "assets/DashboardLayout-B1XczIZk.js",
+    "name": "DashboardLayout",
+    "src": "resources/js/layouts/dashboard/DashboardLayout.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/main.ts",
+      "_LoaderWrapper-C7zliHg3.js",
+      "_LogoDark.vue_vue_type_script_setup_true_lang-B7NJZ4pg.js",
+      "_avatar-1-BVX2dPZX.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ],
+    "css": [
+      "assets/DashboardLayout-Bdd5rrO1.css"
+    ],
+    "assets": [
+      "assets/avatar-group-Bilj_Kis.png"
+    ]
+  },
+  "resources/js/main.ts": {
+    "file": "assets/main-WSbzKxT4.js",
+    "name": "main",
+    "src": "resources/js/main.ts",
+    "isEntry": true,
+    "dynamicImports": [
+      "resources/js/layouts/dashboard/DashboardLayout.vue",
+      "resources/js/views/Products.vue",
+      "resources/js/views/dashboard/DefaultDashboard.vue",
+      "resources/js/views/typography/TypographyPage.vue",
+      "resources/js/views/colors/ColorPage.vue",
+      "resources/js/views/shadows/ShadowPage.vue",
+      "resources/js/views/icons/AntDesignIcons.vue",
+      "resources/js/views/StarterPage.vue",
+      "resources/js/layouts/blank/BlankLayout.vue",
+      "resources/js/views/authentication/auth/LoginPage.vue",
+      "resources/js/views/authentication/auth/RegisterPage.vue",
+      "resources/js/views/pages/maintenance/error/Error404Page.vue",
+      "resources/js/views/pages/maintenance/error/Error404Page.vue"
+    ],
+    "css": [
+      "assets/main-B2-1r5D3.css"
+    ],
+    "assets": [
+      "assets/materialdesignicons-webfont-CSr8KVlo.eot",
+      "assets/materialdesignicons-webfont-Dp5v-WZN.woff2",
+      "assets/materialdesignicons-webfont-PXm3-2wK.woff",
+      "assets/materialdesignicons-webfont-B7mPwVP_.ttf",
+      "assets/public-sans-vietnamese-400-normal-fzCEYZwl.woff2",
+      "assets/public-sans-vietnamese-400-normal-BwEUXHEY.woff",
+      "assets/public-sans-latin-ext-400-normal-L5ZQyZX_.woff2",
+      "assets/public-sans-latin-ext-400-normal-BwKz5AeH.woff",
+      "assets/public-sans-latin-400-normal-D4F9yfFi.woff2",
+      "assets/public-sans-latin-400-normal-D4vgG6SW.woff",
+      "assets/public-sans-vietnamese-500-normal-sPpfk_yB.woff2",
+      "assets/public-sans-vietnamese-500-normal-BKNWXH7D.woff",
+      "assets/public-sans-latin-ext-500-normal-DP9Whp7X.woff2",
+      "assets/public-sans-latin-ext-500-normal-DC3-YAa0.woff",
+      "assets/public-sans-latin-500-normal-ChZcBEnJ.woff2",
+      "assets/public-sans-latin-500-normal-DCQow-rA.woff",
+      "assets/public-sans-vietnamese-600-normal-BoVp2IRl.woff2",
+      "assets/public-sans-vietnamese-600-normal-CCLjVCWZ.woff",
+      "assets/public-sans-latin-ext-600-normal-BOqTAvMD.woff2",
+      "assets/public-sans-latin-ext-600-normal-WBZG7A5n.woff",
+      "assets/public-sans-latin-600-normal-Ck6TyfRI.woff2",
+      "assets/public-sans-latin-600-normal-BX0BwxVl.woff",
+      "assets/public-sans-vietnamese-700-normal-Cjcf1M5d.woff2",
+      "assets/public-sans-vietnamese-700-normal-Czg5uTnZ.woff",
+      "assets/public-sans-latin-ext-700-normal-DQeElHWA.woff2",
+      "assets/public-sans-latin-ext-700-normal-BPjagB3u.woff",
+      "assets/public-sans-latin-700-normal-CGjRhW-d.woff2",
+      "assets/public-sans-latin-700-normal-DFbs-ESy.woff"
+    ]
+  },
+  "resources/js/views/Products.vue": {
+    "file": "assets/Products-CC3ADjrD.js",
+    "name": "Products",
+    "src": "resources/js/views/Products.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_BaseBreadcrumb.vue_vue_type_style_index_0_lang-BPm7N06X.js",
+      "resources/js/main.ts"
+    ]
+  },
+  "resources/js/views/StarterPage.vue": {
+    "file": "assets/StarterPage-BZYqdYnN.js",
+    "name": "StarterPage",
+    "src": "resources/js/views/StarterPage.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_BaseBreadcrumb.vue_vue_type_style_index_0_lang-BPm7N06X.js",
+      "_UiParentCard.vue_vue_type_script_setup_true_lang-DWz11F82.js",
+      "resources/js/main.ts"
+    ]
+  },
+  "resources/js/views/authentication/auth/LoginPage.vue": {
+    "file": "assets/LoginPage-CCJoyNIe.js",
+    "name": "LoginPage",
+    "src": "resources/js/views/authentication/auth/LoginPage.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_LogoDark.vue_vue_type_script_setup_true_lang-B7NJZ4pg.js",
+      "resources/js/main.ts",
+      "_AuthFooter.vue_vue_type_script_setup_true_lang-Dqoi0Ez4.js"
+    ],
+    "css": [
+      "assets/LoginPage-d-ffVH8R.css"
+    ]
+  },
+  "resources/js/views/authentication/auth/RegisterPage.vue": {
+    "file": "assets/RegisterPage-B1sF9JcB.js",
+    "name": "RegisterPage",
+    "src": "resources/js/views/authentication/auth/RegisterPage.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_LogoDark.vue_vue_type_script_setup_true_lang-B7NJZ4pg.js",
+      "resources/js/main.ts",
+      "_AuthFooter.vue_vue_type_script_setup_true_lang-Dqoi0Ez4.js"
+    ],
+    "css": [
+      "assets/RegisterPage-25--ZDRm.css"
+    ]
+  },
+  "resources/js/views/colors/ColorPage.vue": {
+    "file": "assets/ColorPage-1ofWgow0.js",
+    "name": "ColorPage",
+    "src": "resources/js/views/colors/ColorPage.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_BaseBreadcrumb.vue_vue_type_style_index_0_lang-BPm7N06X.js",
+      "_UiParentCard.vue_vue_type_script_setup_true_lang-DWz11F82.js",
+      "resources/js/main.ts"
+    ]
+  },
+  "resources/js/views/dashboard/DefaultDashboard.vue": {
+    "file": "assets/DefaultDashboard-BYoCBoeS.js",
+    "name": "DefaultDashboard",
+    "src": "resources/js/views/dashboard/DefaultDashboard.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/main.ts",
+      "_avatar-1-BVX2dPZX.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ],
+    "css": [
+      "assets/DefaultDashboard-CjVXwzwJ.css"
+    ],
+    "assets": [
+      "assets/avatar-4-DdPPA4yP.png",
+      "assets/avatar-3-CS5upe5Z.png",
+      "assets/avatar-2-BZ1MRvxs.png"
+    ]
+  },
+  "resources/js/views/icons/AntDesignIcons.vue": {
+    "file": "assets/AntDesignIcons-LRZa2XXW.js",
+    "name": "AntDesignIcons",
+    "src": "resources/js/views/icons/AntDesignIcons.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_BaseBreadcrumb.vue_vue_type_style_index_0_lang-BPm7N06X.js",
+      "_UiParentCard.vue_vue_type_script_setup_true_lang-DWz11F82.js",
+      "resources/js/main.ts"
+    ]
+  },
+  "resources/js/views/pages/maintenance/error/Error404Page.vue": {
+    "file": "assets/Error404Page-BThtqFhk.js",
+    "name": "Error404Page",
+    "src": "resources/js/views/pages/maintenance/error/Error404Page.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "resources/js/main.ts"
+    ],
+    "css": [
+      "assets/Error404Page-s9nJtSui.css"
+    ],
+    "assets": [
+      "assets/Error404-AdsfEbqB.png",
+      "assets/TwoCone-5iyjn531.png"
+    ]
+  },
+  "resources/js/views/shadows/ShadowPage.vue": {
+    "file": "assets/ShadowPage-BUELwntQ.js",
+    "name": "ShadowPage",
+    "src": "resources/js/views/shadows/ShadowPage.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_BaseBreadcrumb.vue_vue_type_style_index_0_lang-BPm7N06X.js",
+      "_UiParentCard.vue_vue_type_script_setup_true_lang-DWz11F82.js",
+      "resources/js/main.ts"
+    ]
+  },
+  "resources/js/views/typography/TypographyPage.vue": {
+    "file": "assets/TypographyPage-hUFiZtQi.js",
+    "name": "TypographyPage",
+    "src": "resources/js/views/typography/TypographyPage.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_BaseBreadcrumb.vue_vue_type_style_index_0_lang-BPm7N06X.js",
+      "_UiParentCard.vue_vue_type_script_setup_true_lang-DWz11F82.js",
+      "resources/js/main.ts"
+    ]
+  }
+}
