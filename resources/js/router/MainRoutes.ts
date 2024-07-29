@@ -12,10 +12,16 @@ const MainRoutes = {
       component: () => import('@/views/Products.vue')
     },
     {
+      name: 'Mercadolibre - Envíos Flex',
+      path: '/ml/envios-flex',
+      component: () => import('@/views/ml/EnviosFlex.vue')
+    },
+    {
       name: 'Dashboard',
       path: '/dashboard',
       component: () => import('@/views/dashboard/DefaultDashboard.vue')
     },
+    /*
     {
       name: 'Typography',
       path: '/typography',
@@ -36,11 +42,13 @@ const MainRoutes = {
       path: '/icon/ant',
       component: () => import('@/views/icons/AntDesignIcons.vue')
     },
+    */
     {
       name: 'other',
       path: '/sample-page',
       component: () => import('@/views/StarterPage.vue')
     }
+    
   ]
 };
 

@@ -24,7 +24,7 @@ const productsTableHeaders = ref([
 const productsTableData = ref([]);
 const loadingTable = ref(false);
 onMounted(async () => {
-    const responseData = await fetchWrapper.get(`http://localhost:8000/api/products`);
+    const responseData = await fetchWrapper.get(`${import.meta.env.VITE_API_URL}/products`);
     productsTableData.value = responseData.data;
 })
 </script>

@@ -40,6 +40,13 @@ const sidebarItem: menu[] = [
     icon: TagsOutlined,
     to: '/productos'
   },
+  { header: 'Mercadolibre' },
+  {
+    title: 'Envíos Flex',
+    icon: TagsOutlined,
+    to: '/ml/envios-flex'
+  },
+  /*
   { header: 'Authentication' },
   {
     title: 'Login',
@@ -87,6 +94,7 @@ const sidebarItem: menu[] = [
     chipColor: 'secondary',
     chipVariant: 'flat'
   }
+  */
 ];
 
 export default sidebarItem;

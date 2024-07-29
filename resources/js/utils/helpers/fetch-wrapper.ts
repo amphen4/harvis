@@ -31,7 +31,7 @@ function authHeader(url: string) {
   
   const  user  = JSON.parse(localStorage.getItem('user'));
   const isLoggedIn = !!user?.expiration_date && (new Date(user.expiration_date)) > (new Date());
-  const isApiUrl = url.startsWith('http://localhost:8000/api');
+  const isApiUrl = url.startsWith(`${import.meta.env.VITE_API_URL}`);
   if (isLoggedIn && isApiUrl) {
     console.log('le agregare el bearer token');
     return { Authorization: `Bearer ${user.token}` };
