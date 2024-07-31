@@ -14,7 +14,7 @@ const MainRoutes = {
     {
       name: 'Mercadolibre - Envíos Flex',
       path: '/ml/envios-flex',
-      component: () => import('@/views/ml/EnviosFlex.vue')
+      component: () => import('@/views/ml/EnviosFlex/Base.vue')
     },
     {
       name: 'Dashboard',

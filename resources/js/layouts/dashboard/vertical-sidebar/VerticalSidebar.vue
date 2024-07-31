@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { shallowRef, ref } from 'vue';
+import { shallowRef, ref, computed } from 'vue';
 //import { useCustomizerStore } from '../../../stores/customizer';
 import sidebarItems from './sidebarItem';
 
@@ -12,17 +12,21 @@ import Logo from '../logo/LogoDark.vue';
 //const customizer = useCustomizerStore;
 const sidebarMenu = shallowRef(sidebarItems);
 
-import { defineComponent } from 'vue'
+import { useStore } from 'vuex'
+const store = useStore();
 
-const Sidebar_drawer = ref(true);
-const mini_sidebar = ref(false);
 
+const Sidebar_drawer = computed(() => store.state.customizer.Sidebar_drawer);
+const mini_sidebar = computed(() => store.state.customizer.mini_sidebar);
+const prueba = (e) => {
+  store.dispatch('customizer/SET_SIDEBAR_DRAWER');
+}
 </script>
 
 <template>
   <v-navigation-drawer
     left
-    v-model="Sidebar_drawer"
+    :model-value="Sidebar_drawer"
     elevation="0"
     rail-width="60"
     mobile-breakpoint="lg"
@@ -30,6 +34,7 @@ const mini_sidebar = ref(false);
     class="leftSidebar"
     :rail="mini_sidebar"
     expand-on-hover
+    @update:modelValue="prueba"
   >
     <div class="pa-5">
       <Logo />

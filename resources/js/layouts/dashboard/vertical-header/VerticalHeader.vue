@@ -77,6 +77,7 @@ const store = useStore();
     <!-- ---------------------------------------------- -->
     <!-- Github -->
     <!-- ---------------------------------------------- -->
+    <!--
     <v-btn
       icon
       class="text-secondary hidden-sm-and-down d-flex"
@@ -88,6 +89,7 @@ const store = useStore();
     >
       <GithubOutlined :style="{ fontSize: '16px' }" />
     </v-btn>
+    -->
 
     <!-- ---------------------------------------------- -->
     <!-- Notification -->

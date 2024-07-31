@@ -1,1 +1,0 @@
-import{v as e,o,c as r,w as t,a,y as s,a2 as p,$ as n}from"./main-Cpti9Pq_.js";import{L as c}from"./LoaderWrapper-q7ITqoYF.js";import"./_plugin-vue_export-helper-DlAUqK2U.js";const d=e({__name:"BlankLayout",setup(u){return(_,m)=>(o(),r(n,null,{default:t(()=>[a(c),a(s(p))]),_:1}))}});export{d as default};
