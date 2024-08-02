@@ -5,16 +5,18 @@
 //const uiStore = useUIStore();
 //const { isLoading } = storeToRefs(uiStore);
 import { ref } from 'vue';
+import { useStore } from 'vuex';
 
 const isLoading = ref(false);
+const store = useStore();
 </script>
 
 <template>
   <div
     :class="{
       'page-loader': true,
-      loading: isLoading,
-      hidden: !isLoading
+      loading: store.state.harvis.loadingCounter,
+      hidden: !store.state.harvis.loadingCounter
     }"
   >
     <div class="bar" />

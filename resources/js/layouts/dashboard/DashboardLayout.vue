@@ -4,6 +4,8 @@ import LoaderWrapper from './LoaderWrapper.vue';
 import VerticalSidebarVue from './vertical-sidebar/VerticalSidebar.vue';
 import VerticalHeaderVue from './vertical-header/VerticalHeader.vue';
 import FooterPanel from './footer/FooterPanel.vue';
+import { useStore } from 'vuex';
+const store = useStore();
 </script>
 
 <template>
@@ -27,6 +29,19 @@ import FooterPanel from './footer/FooterPanel.vue';
           </div>
         </v-container>
       </v-main>
+      <v-snackbar :timeout="-1" color="warning" v-model="store.state.harvis.showSnackbar">
+        <span v-if="store.state.harvis.snackbarMessages.length == 1">{{ store.state.harvis.snackbarMessages[0] }}</span>
+        <v-virtual-scroll v-if="store.state.harvis.snackbarMessages.length > 1" :items="store.state.harvis.snackbarMessages" >
+          <template v-slot:default="{ item }">
+            <v-list-item density="compact">
+              - {{ item }}
+            </v-list-item>
+          </template>
+        </v-virtual-scroll>
+        <template v-slot:actions>
+          <v-btn @click="store.dispatch('harvis/CLOSE_SNACKBAR')" density="compact" icon="mdi-close"></v-btn>
+        </template>
+      </v-snackbar>
     </v-app>
   </v-locale-provider>
 </template>

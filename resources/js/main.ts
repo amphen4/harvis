@@ -3,7 +3,6 @@ import { createApp } from 'vue';
 import App from './App.vue';
 import { router } from './router';
 import store from './stores';
-console.log(store);
 import vuetify from './plugins/vuetify';
 import '@/scss/style.scss';
 //import 'vue3-perfect-scrollbar/dist/vue3-perfect-scrollbar.css'
@@ -20,7 +19,7 @@ import '@fontsource/public-sans/600.css';
 import '@fontsource/public-sans/700.css';
 
 //Mock Api data
-import { fakeBackend } from '@/utils/helpers/fake-backend';
+//import { fakeBackend } from '@/utils/helpers/fake-backend';
 
 //i18
 import { createI18n } from 'vue-i18n';
@@ -34,7 +33,7 @@ const i18n = createI18n({
 });
 
 const app = createApp(App);
-fakeBackend();
+//fakeBackend();
 app.use(router);
 app.use(store);
 app.use(PerfectScrollbarPlugin);

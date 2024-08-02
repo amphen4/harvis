@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\Stores\ProductsController;
+use App\Http\Controllers\Marketplaces\ClientApiController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -30,8 +31,7 @@ Route::post('/login', function (Request $request) {
 });
 
 Route::middleware('auth:sanctum')->group(function(){
-
     Route::get('/products', [ProductsController::class, 'getProducts']);
-
+    Route::post('/marketplaces/client_api', [ClientApiController::class, 'send']);
 });
 

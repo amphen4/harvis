@@ -4,7 +4,7 @@
       <v-row>
         <v-col cols="12" md="12">
           <v-sheet height="auto">
-            <v-btn class="float-md-right mx-2" variant="outlined" color="primary" small>
+            <v-btn @click="sendForm" :loading="waiting" class="float-md-right mx-2" variant="outlined" color="primary" small>
               <v-icon icon="mdi-flash"></v-icon> &nbsp;
               Aplicar configuración
             </v-btn>
@@ -196,12 +196,15 @@
       </v-card>
     </template>
   </v-dialog>
+  <VSonner color="success" />
 </template>
 
 <script setup>
 import { ref, defineProps, computed, watch } from 'vue';
 import UiTitleCard from '@/components/shared/UiTitleCard.vue';
-// Obtener las props
+import { fetchWrapper } from '@/utils/helpers/fetch-wrapper';
+import { VSonner, toast } from 'vuetify-sonner'
+import 'vuetify-sonner/style.css'
 const props = defineProps({apiState: Object});
 const dialogs = ref({scheduling: false});
 const scheduling = ref({
@@ -256,8 +259,29 @@ const allZones = ref(false)
 watch( allZones, (newValue,oldValue) => {
   if( newValue && !oldValue ){
     zones.value.forEach( e => e.enabled = true);
-  }else if( !newValue && oldValue ){
-    zones.value.forEach( e => e.enabled = false);
   }
 })
+watch( zones, (newValue,oldValue) => {
+  if( newValue.some(e => !e.enabled) ){
+    allZones.value = false;
+  }
+}, {deep: true})
+const waiting = ref(false);
+const sendForm = async () => {
+  waiting.value = true;
+  const responseData = await fetchWrapper.post(`${import.meta.env.VITE_API_URL}/marketplaces/client_api`, {
+    payload:{
+      zones: zones.value,
+      scheduling: scheduling.value,
+    },
+    action: 'send_api_configuration',
+    marketplace: 'ml'
+  }).finally(() => {
+    waiting.value = false;
+  }).then((data) => {
+    toast(data.message,{prependIcon: 'mdi-check-circle', cardProps: { color: 'success'}});
+  });
+  
+}
+
 </script>

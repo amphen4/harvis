@@ -35,6 +35,7 @@
         "ant-design-vue": "^4.2.3",
         "apexcharts": "^3.49.1",
         "dotenv": "^16.4.5",
+        "uuid": "^10.0.0",
         "vee-validate": "^4.13.1",
         "vite-plugin-vuetify": "^2.0.3",
         "vue": "^3.4.29",
@@ -44,6 +45,7 @@
         "vue3-apexcharts": "^1.5.3",
         "vue3-perfect-scrollbar": "^2.0.0",
         "vuetify": "^3.6.8",
+        "vuetify-sonner": "^0.3.19",
         "vuex": "^4.1.0",
         "webpack-plugin-vuetify": "^3.0.3"
     }
