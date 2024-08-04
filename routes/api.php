@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\Stores\ProductsController;
 use App\Http\Controllers\Marketplaces\ClientApiController;
+use App\Http\Controllers\Externals\Mercadolibre;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -34,4 +35,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/products', [ProductsController::class, 'getProducts']);
     Route::post('/marketplaces/client_api', [ClientApiController::class, 'send']);
 });
+
+Route::get('externals/ml/redirect_oauth', [Mercadolibre::class, 'redirect_callback']);
+Route::post('externals/ml/notification_callback', [Mercadolibre::class, 'notification_callback']);
 
