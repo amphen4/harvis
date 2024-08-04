@@ -103,7 +103,21 @@ class Mercadolibre {
         }
         throw new Error("Problemas para refrescar token en Mercadolibre API");
     }
-
+    public function isTokenExpired(){
+        if( !Storage::exists('http/'.$this->shop->shops_id.'_'.$this->marketplace->marketplaces_id.'.json') ){
+            return false;
+        }
+        $file_contents = Storage::get('http/'.$this->shop->shops_id.'_'.$this->marketplace->marketplaces_id.'.json');
+        $json = json_decode($file_contents);
+        if( $json ){
+            $now = new Carbon();
+            $fechaExpiracionToken = new Carbon($json->TokenExpiresIn);
+            if( $now->greaterThan( $fechaExpiracionToken ) ){
+                return true;
+            }
+        }
+        return false;
+    }
     public function getProducts($queryParams = [])
     {
         $uri = $this::API_BASE_URL . '/v3/items';

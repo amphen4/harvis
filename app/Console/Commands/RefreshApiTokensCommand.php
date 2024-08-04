@@ -28,9 +28,18 @@ class RefreshApiTokensCommand extends Command
     {
         $marketplaces = Marketplace::all();
         foreach( $marketplaces as $marketplace ){
-            $marketplaceShops = $marketplace->shops()->get();
-            \Log::info("Prueba comandos programados");
-            \Log::info(json_encode($marketplaceShops));
+            $className = 'App\\Http\Connectors\\'.$marketplace->connector_class_name;
+            if( class_exists($className) ){
+                $marketplaceShops = $marketplace->shops()->get();
+                foreach( $marketplaceShops as $shop ){
+                    $connector = new $className($marketplace, $shop);
+                    if( method_exists($connector, 'isTokenExpired') && $connector->isTokenExpired() ){
+                        if( method_exists($connector, 'refreshToken') ){
+                            $connector->refreshToken();
+                        }
+                    }
+                } 
+            }
         }
     }
 }
