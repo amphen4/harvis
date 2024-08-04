@@ -55,7 +55,7 @@ class MarketplacesSeeder extends Seeder
 
         if( !Marketplace::where('name','Walmart CL')->count() ){
             $marketplace_WalmartCL = new Marketplace();
-            $marketplace_WalmartCL->connector_class_name = 'Walmart CL';
+            $marketplace_WalmartCL->connector_class_name = 'WalmartCL';
             $marketplace_WalmartCL->name = 'Walmart CL';
             $marketplace_WalmartCL->save();
         }else{
@@ -68,6 +68,24 @@ class MarketplacesSeeder extends Seeder
         foreach( $paris_name_configs_array as $name_config ){
             if( !MarketplaceConfig::where('name', $name_config)->where('marketplace_id',$marketplace_WalmartCL->marketplaces_id)->count() ){
                 MarketplaceConfig::create(['name' => $name_config, 'marketplace_id' => $marketplace_WalmartCL->marketplaces_id]);
+            }
+        }
+
+        if( !Marketplace::where('name','Mercadolibre')->count() ){
+            $marketplace_Mercadolibre = new Marketplace();
+            $marketplace_Mercadolibre->connector_class_name = 'Mercadolibre';
+            $marketplace_Mercadolibre->name = 'Mercadolibre';
+            $marketplace_Mercadolibre->save();
+        }else{
+            $marketplace_Mercadolibre = Marketplace::where('name','Mercadolibre')->first();
+        }
+        $paris_name_configs_array = [
+            'ClientId',
+            'ClientSecret',
+        ];
+        foreach( $paris_name_configs_array as $name_config ){
+            if( !MarketplaceConfig::where('name', $name_config)->where('marketplace_id',$marketplace_Mercadolibre->marketplaces_id)->count() ){
+                MarketplaceConfig::create(['name' => $name_config, 'marketplace_id' => $marketplace_Mercadolibre->marketplaces_id]);
             }
         }
 
