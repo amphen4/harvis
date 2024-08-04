@@ -79,11 +79,13 @@ class MarketplacesSeeder extends Seeder
         }else{
             $marketplace_Mercadolibre = Marketplace::where('name','Mercadolibre')->first();
         }
-        $paris_name_configs_array = [
-            'ClientId',
-            'ClientSecret',
+        $mercadolibre_name_configs_array = [
+            'AppId',
+            'SecretKey',
+            'RedirectUri',
+            'NotificationCallbackUri'
         ];
-        foreach( $paris_name_configs_array as $name_config ){
+        foreach( $mercadolibre_name_configs_array as $name_config ){
             if( !MarketplaceConfig::where('name', $name_config)->where('marketplace_id',$marketplace_Mercadolibre->marketplaces_id)->count() ){
                 MarketplaceConfig::create(['name' => $name_config, 'marketplace_id' => $marketplace_Mercadolibre->marketplaces_id]);
             }

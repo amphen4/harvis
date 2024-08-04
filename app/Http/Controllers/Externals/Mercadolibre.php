@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Externals;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Marketplace;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Storage;
 
 class Mercadolibre extends Controller
 {
@@ -27,8 +29,28 @@ class Mercadolibre extends Controller
                 ],
                 'body' => "grant_type=authorization_code&client_id=$APP_ID&client_secret=$SECRET_KEY&code=$SERVER_GENERATED_AUTHORIZATION_CODE&redirect_uri=$REDIRECT_URI"
             ]);
+            $json = $response->getBody()->getContents();
             \Log::info('TOKEN from Mercadolibre');
-            \Log::info($response->getBody()->getContents());
+            \Log::info($json);
+            $jsonDecoded = json_decode($json, true);
+            $shop_id = $request->state;// TODO: Recuperar mensaje enviado para saber el shop id y encriptarlo
+            $marketplace = Marketplace::where('Mercadolibre')->first();
+            if( !Storage::exists('http/'.$shop_id.'_'.$marketplace->marketplaces_id.'.json') ){
+                $array = [];
+                $array['AccessToken'] = $jsonDecoded['access_token'];
+                $array['TokenExpiresIn'] = (new Carbon)->addSeconds($jsonDecoded['expires_in'])->toIso8601String();
+                $array['UserId'] = $jsonDecoded['user_id'];
+                $array['RefreshToken'] = $jsonDecoded['refresh_token'];
+                Storage::put('http/'.$shop_id.'_'.$marketplace->marketplaces_id.'.json', json_encode($array));
+            }else{
+                $file_contents = Storage::get('http/'.$shop_id.'_'.$marketplace->marketplaces_id.'.json');
+                $array = json_decode($file_contents, true);
+                $array['AccessToken'] = $jsonDecoded['access_token'];
+                $array['TokenExpiresIn'] = (new Carbon)->addSeconds($jsonDecoded['expires_in'])->toIso8601String();
+                $array['UserId'] = $jsonDecoded['user_id'];
+                $array['RefreshToken'] = $jsonDecoded['refresh_token'];
+                Storage::put('http/'.$shop_id.'_'.$marketplace->marketplaces_id.'.json', json_encode($array));
+            }
             return response()->json("Autenticación completada");
         }
     }
