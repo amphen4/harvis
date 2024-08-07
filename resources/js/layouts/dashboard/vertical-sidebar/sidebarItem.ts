@@ -9,7 +9,8 @@ import {
   BgColorsOutlined,
   BarcodeOutlined,
   CrownOutlined,
-  TagsOutlined
+  TagsOutlined,
+  CarOutlined
 } from '@ant-design/icons-vue';
 
 export interface menu {
@@ -43,7 +44,7 @@ const sidebarItem: menu[] = [
   { header: 'Mercadolibre' },
   {
     title: 'Envíos Flex',
-    icon: TagsOutlined,
+    icon: CarOutlined,
     to: '/ml/envios-flex'
   },
   /*

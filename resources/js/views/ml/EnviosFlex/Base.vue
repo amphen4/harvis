@@ -19,21 +19,31 @@ const breadcrumbs = shallowRef([
 
 const productsTableData = ref([]);
 const contentReady = ref(false);
-const apiState = ref({hagoEnvios: false});
+const apiState = ref({data: {}});
+const fetchData = async (refresh = false) => {
+  contentReady.value = false;
+  const mlFlexApiConfiguration = localStorage.getItem('ML.FLEX.ApiConfiguration');
+  if( mlFlexApiConfiguration && !refresh){
+    apiState.value.data = JSON.parse(mlFlexApiConfiguration);
+    contentReady.value = true;
+  }else{
+    const responseData = await fetchWrapper.get(`${import.meta.env.VITE_API_URL}/marketplaces/client_api`, {
+      action: 'getEnviosFlexConfigs',
+      marketplace: 'Mercadolibre'
+    }).then((data) => {
+      localStorage.setItem('ML.FLEX.ApiConfiguration', JSON.stringify(data));
+      apiState.value.data = data;
+    });
+    contentReady.value = true;
+  }
+}
 onMounted(async () => {
-    //const responseData = await fetchWrapper.get(`${import.meta.env.VITE_API_URL}/products`);
-    //productsTableData.value = responseData.data;
-    setTimeout(() => {
-      console.log('AAA');
-      apiState.value.hagoEnvios = true;
-      contentReady.value = true;
-      console.log('BBBB');
-    }, 2000);
+    fetchData()
 })
 </script>
 
 <template>
   <BaseBreadcrumb :title="page.title" :breadcrumbs="breadcrumbs"></BaseBreadcrumb>
   <ContentSkeleton v-if="!contentReady"/>
-  <Content v-else :apiState="apiState" />
+  <Content @refresh="fetchData(true)" v-else :apiState="apiState.data" />
 </template>

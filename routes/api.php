@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\Stores\ProductsController;
 use App\Http\Controllers\Marketplaces\ClientApiController;
+use App\Http\Controllers\Marketplaces\CronJobsController;
 use App\Http\Controllers\Externals\Mercadolibre;
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +35,10 @@ Route::post('/login', function (Request $request) {
 Route::middleware('auth:sanctum')->group(function(){
     Route::get('/products', [ProductsController::class, 'getProducts']);
     Route::post('/marketplaces/client_api', [ClientApiController::class, 'send']);
+    Route::get('/marketplaces/client_api', [ClientApiController::class, 'get']);
+
+    Route::post('marketplaces/cron_jobs', [CronJobsController::class, 'store']);
+    Route::get('marketplaces/cron_jobs', [CronJobsController::class, 'index']);
 });
 
 Route::get('externals/ml/redirect_oauth', [Mercadolibre::class, 'redirect_callback']);

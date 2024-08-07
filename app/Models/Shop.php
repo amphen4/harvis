@@ -23,4 +23,12 @@ class Shop extends Model
     {
         return $this->belongsToMany( User::class, 'user_shop', 'shop_id', 'user_id' )->withTimestamps();
     }
+
+    public function hasThisMarketplace($marketplaceId){
+        return $this->marketplaces()->where('marketplaces_id', $marketplaceId)->count() ? true : false;
+    }
+
+    public function hasThisMarketplaceByName($marketplaceName){
+        return $this->marketplaces()->where('name', $marketplaceName)->count() ? true : false;
+    }
 }

@@ -22,4 +22,16 @@ class Marketplace extends Model
     {
         return $this->belongsToMany( Shop::class, 'shop_marketplace', 'marketplace_id', 'shop_id' )->withPivot('shop_alias');
     }
+
+    public static function getAvailableApiActionsByMarketplaceName($marketplaceName){
+        switch($marketplaceName){
+            case 'Mercadolibre':
+                return ['getEnviosFlexConfigs','applyApiConfiguration'];
+            break;
+            default:
+                return [];
+            break;
+        }
+        
+    }
 }

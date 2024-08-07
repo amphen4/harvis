@@ -4,6 +4,9 @@
       <v-row>
         <v-col cols="12" md="12">
           <v-sheet height="auto">
+            <div class="float-md-left mr-2">
+              <span class="text-caption">Actualizado a las {{updatedAt}}</span> <v-tooltip text="Actualizar datos"><template v-slot:activator="{props}"><v-btn @click="emitirEvento('refresh')" color="primary" v-bind="props" variant="text"><v-icon icon="mdi-refresh"></v-icon></v-btn></template></v-tooltip>
+            </div>
             <v-btn @click="sendForm" :loading="waiting" class="float-md-right mx-2" variant="outlined" color="primary" small>
               <v-icon icon="mdi-flash"></v-icon> &nbsp;
               Aplicar configuración
@@ -12,6 +15,42 @@
               <v-icon icon="mdi-calendar-clock"></v-icon> &nbsp;
               Programar configuración
             </v-btn>
+            <v-bottom-sheet v-model="sheet">
+              <template v-slot:activator="{ props }">
+                <v-tooltip text="Ver configuraciones programadas">
+                  <template v-slot:activator="props2">
+                    <div v-bind="props2.props">
+                      <v-btn v-bind="props" @click="sheet = true" class="float-md-right mx-2" variant="outlined" color="primary" small>
+                        <v-badge floating color="error" :content="scheduledConfigs.length">
+                          <v-icon icon="mdi-calendar-clock"></v-icon>
+                        </v-badge>
+                      </v-btn>
+                    </div>
+                  </template>
+                </v-tooltip>
+                  
+                
+              </template>
+              <v-table >
+                  <thead>
+                    <tr>
+                      <th>Frecuencia:</th>
+                      <th>Dia(s):</th>
+                      <th>Hora(s):</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                    <tbody>
+                      <tr v-for="(scheduledConfig,indexScheduledConfig) in scheduledConfigs" :key="indexScheduledConfig">
+                        <td> <strong>{{ scheduledConfig.frequency_type }}</strong></td>
+                        <td> {{ scheduledConfig.weekdays.map( e => obtenerDiaSemanaPorNumero(e) ).join(', ') }}</td>
+                        <td> {{ scheduledConfig.dayhours.join(', ')  }}</td>
+                        <td class="text-right"> <v-btn><v-icon icon="mdi-delete"></v-icon></v-btn> </td>
+                      </tr>
+                    </tbody>
+                  </v-table>
+
+            </v-bottom-sheet>
           </v-sheet>
         </v-col>
       </v-row>
@@ -20,7 +59,7 @@
           <UiTitleCard title="Tiempos de entrega" subtitle="Establece los días y horarios en los que ofreces envíos, y el máximo de envíos que podrás entregar." class-name="mt-2 px-0 pb-0 rounded-md">
           <v-card elevation="0">
             <v-card-text>
-              <v-switch hide-details="auto" color="success" :label="apiStateReactive.hagoEnvios ? 'Si hago envíos en el día' : 'No hago envíos en el día'" v-model="apiStateReactive.hagoEnvios"></v-switch>
+              <v-switch hide-details="auto" color="success" :label="apiConfiguration.hagoEnvios ? 'Si hago envíos en el día' : 'No hago envíos en el día'" v-model="apiConfiguration.hagoEnvios"></v-switch>
             </v-card-text>
           </v-card>
           </UiTitleCard>
@@ -43,18 +82,18 @@
                   <td>Lunes a viernes</td>
                   <td>
                     <v-row>
-                      <v-col cols="12" md="6"><v-select :items="rangehours" class="my-2" hide-details="auto" variant="outlined" label="Desde"></v-select></v-col>
-                      <v-col cols="12" md="6"><v-select :items="rangehours" class="my-2" hide-details="auto" variant="outlined" label="Hasta"></v-select></v-col>
+                      <v-col cols="12" md="6"><v-select v-model="apiConfiguration.delivery_ranges.week.from" :items="rangehours" class="my-2" hide-details="auto" variant="outlined" label="Desde"></v-select></v-col>
+                      <v-col cols="12" md="6"><v-select  v-model="apiConfiguration.delivery_ranges.week.to" :items="rangehours" class="my-2" hide-details="auto" variant="outlined" label="Hasta"></v-select></v-col>
                     </v-row>
                   </td>
                   <td>
                     <v-row>
-                      <v-col cols="12" md="12"><v-text-field type="number" min="1" hide-details="auto" variant="outlined" label="Máximo de envíos"></v-text-field></v-col>
+                      <v-col cols="12" md="12"><v-text-field  v-model="apiConfiguration.delivery_ranges.week.capacity" type="number" min="1" hide-details="auto" variant="outlined" label="Máximo de envíos"></v-text-field></v-col>
                     </v-row>
                   </td>
                   <td>
                     <v-row>
-                      <v-col cols="12" md="12"><v-select :items="rangehours" hide-details="auto" variant="outlined" label="Horario de corte"></v-select></v-col>
+                      <v-col cols="12" md="12"><v-select  v-model="apiConfiguration.delivery_ranges.week.cutoff" :items="rangecutoff" hide-details="auto" variant="outlined" label="Horario de corte"></v-select></v-col>
                     </v-row>
                   </td>
                 </tr>
@@ -62,18 +101,18 @@
                   <td class="pl-2"><v-checkbox v-model="saturdayEnabled" hide-details="auto" label="Sábados"></v-checkbox></td>
                   <td>
                     <v-row>
-                      <v-col cols="12" md="6"><v-select :disabled="!saturdayEnabled" :items="rangehours" class="my-2" hide-details="auto" variant="outlined" label="Desde"></v-select></v-col>
-                      <v-col cols="12" md="6"><v-select :disabled="!saturdayEnabled" :items="rangehours" class="my-2" hide-details="auto" variant="outlined" label="Hasta"></v-select></v-col>
+                      <v-col cols="12" md="6"><v-select  v-model="apiConfiguration.delivery_ranges.saturday.from" :disabled="!saturdayEnabled" :items="rangehours" class="my-2" hide-details="auto" variant="outlined" label="Desde"></v-select></v-col>
+                      <v-col cols="12" md="6"><v-select  v-model="apiConfiguration.delivery_ranges.saturday.to" :disabled="!saturdayEnabled" :items="rangehours" class="my-2" hide-details="auto" variant="outlined" label="Hasta"></v-select></v-col>
                     </v-row>
                   </td>
                   <td>
                     <v-row>
-                      <v-col cols="12" md="12"><v-text-field :disabled="!saturdayEnabled" type="number" min="1" hide-details="auto" variant="outlined" label="Máximo de envíos"></v-text-field></v-col>
+                      <v-col cols="12" md="12"><v-text-field  v-model="apiConfiguration.delivery_ranges.saturday.capacity" :disabled="!saturdayEnabled" type="number" min="1" hide-details="auto" variant="outlined" label="Máximo de envíos"></v-text-field></v-col>
                     </v-row>
                   </td>
                   <td>
                     <v-row>
-                      <v-col cols="12" md="12"><v-select :disabled="!saturdayEnabled" :items="rangehours" hide-details="auto" variant="outlined" label="Horario de corte"></v-select></v-col>
+                      <v-col cols="12" md="12"><v-select  v-model="apiConfiguration.delivery_ranges.saturday.cutoff" :disabled="!saturdayEnabled" :items="rangecutoff" hide-details="auto" variant="outlined" label="Horario de corte"></v-select></v-col>
                     </v-row>
                   </td>
                 </tr>
@@ -81,18 +120,18 @@
                   <td class="pl-2"><v-checkbox v-model="sundayEnabled" hide-details="auto" label="Domingos"></v-checkbox></td>
                   <td>
                     <v-row>
-                      <v-col cols="12" md="6"><v-select :disabled="!sundayEnabled" :items="rangehours" class="my-2" hide-details="auto" variant="outlined" label="Desde"></v-select></v-col>
-                      <v-col cols="12" md="6"><v-select :disabled="!sundayEnabled" :items="rangehours" class="my-2" hide-details="auto" variant="outlined" label="Hasta"></v-select></v-col>
+                      <v-col cols="12" md="6"><v-select v-model="apiConfiguration.delivery_ranges.sunday.from" :disabled="!sundayEnabled" :items="rangehours" class="my-2" hide-details="auto" variant="outlined" label="Desde"></v-select></v-col>
+                      <v-col cols="12" md="6"><v-select  v-model="apiConfiguration.delivery_ranges.sunday.to" :disabled="!sundayEnabled" :items="rangehours" class="my-2" hide-details="auto" variant="outlined" label="Hasta"></v-select></v-col>
                     </v-row>
                   </td>
                   <td>
                     <v-row>
-                      <v-col cols="12" md="12"><v-text-field :disabled="!sundayEnabled" type="number" min="1" hide-details="auto" variant="outlined" label="Máximo de envíos"></v-text-field></v-col>
+                      <v-col cols="12" md="12"><v-text-field  v-model="apiConfiguration.delivery_ranges.sunday.capacity" :disabled="!sundayEnabled" type="number" min="1" hide-details="auto" variant="outlined" label="Máximo de envíos"></v-text-field></v-col>
                     </v-row>
                   </td>
                   <td>
                     <v-row>
-                      <v-col cols="12" md="12"><v-select :disabled="!sundayEnabled" :items="rangehours" hide-details="auto" variant="outlined" label="Horario de corte"></v-select></v-col>
+                      <v-col cols="12" md="12"><v-select  v-model="apiConfiguration.delivery_ranges.sunday.cutoff" :disabled="!sundayEnabled" :items="rangecutoff" hide-details="auto" variant="outlined" label="Horario de corte"></v-select></v-col>
                     </v-row>
                   </td>
                 </tr>
@@ -188,7 +227,7 @@
             color="primary"
             text="Enviar"
             variant="outlined"
-            @click="dialogs.scheduling = false"
+            @click="sendFormScheduling"
             :disabled="!formCompleted"
             append-icon="mdi-send"
           ></v-btn>
@@ -200,11 +239,15 @@
 </template>
 
 <script setup>
-import { ref, defineProps, computed, watch } from 'vue';
+import { ref, defineProps, computed, watch, defineEmits, onMounted } from 'vue';
 import UiTitleCard from '@/components/shared/UiTitleCard.vue';
 import { fetchWrapper } from '@/utils/helpers/fetch-wrapper';
 import { VSonner, toast } from 'vuetify-sonner'
 import 'vuetify-sonner/style.css'
+const emit= defineEmits(["refresh"])
+const emitirEvento = (nombreEvento) => {
+  emit(nombreEvento);
+}
 const props = defineProps({apiState: Object});
 const dialogs = ref({scheduling: false});
 const scheduling = ref({
@@ -212,9 +255,11 @@ const scheduling = ref({
   dayhours: [],
   frequencyType: null,
 });
+const scheduledConfigs = ref([]);
+const sheet = ref(false);
 const schedulingHours = ref([
   '00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00', '08:00', '09:00', '10:00', '11:00',
-  '12:00','13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00', '23:59',
+  '12:00','13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00',
 ]);
 const switchProgrammedDay = (dayNumber) => {
   if( !scheduling.value.weekdays.includes(dayNumber) ){
@@ -223,7 +268,7 @@ const switchProgrammedDay = (dayNumber) => {
     scheduling.value.weekdays.splice( scheduling.value.weekdays.indexOf(dayNumber) , 1)
   }
 }
-const apiStateReactive = ref(props.apiState);
+//const apiStateReactive = ref({hagoEnvios: .hagoEnvios);
 const formCompleted = computed(() => {
   const flag = false;
   if( scheduling.value.frequencyType == 'Semanal'){
@@ -233,28 +278,74 @@ const formCompleted = computed(() => {
   }
 })
 const rangehours = [9,10,11,12,13,14,15,16,17,18,19,20,21];
+const rangecutoff = [12,13,14,15,16,17,18];
 const saturdayEnabled = ref(false);
 const sundayEnabled = ref(false);
 const zones = ref([
-  {name: 'Colina', enabled: false, cost: 4000},
-  {name: 'Lo Barnechea', enabled: false, cost: 4000},
-  {name: 'Quilicura', enabled: false, cost: 4000},
-  {name: 'Huechuraba', enabled: false, cost: 4000},
-  {name: 'Vitacura', enabled: false, cost: 4000},
-  {name: 'Pudahuel', enabled: false, cost: 4000},
-  {name: 'Anillo Oeste', enabled: false, cost: 4000},
-  {name: 'Anillo Este', enabled: false, cost: 4000},
-  {name: 'Las Condes de Santiago', enabled: false, cost: 4000},
-  {name: 'La Reina', enabled: false, cost: 4000},
-  {name: 'Peñalolén', enabled: false, cost: 4000},
-  {name: 'La Florida', enabled: false, cost: 4000},
-  {name: 'Puente Alto', enabled: false, cost: 4000},
-  {name: 'La Pintana', enabled: false, cost: 4000},
-  {name: 'El Bosque', enabled: false, cost: 4000},
-  {name: 'San Bernardo', enabled: false, cost: 4000},
-  {name: 'Padre Hurtado', enabled: false, cost: 4000},
-  {name: 'Maipú', enabled: false, cost: 4000},
+  {id: 'Colina', name: 'Colina', enabled: false, cost: 4000},
+  {id: 'Lo_Barnechea', name: 'Lo Barnechea', enabled: false, cost: 4000},
+  {id: 'Quilicura', name: 'Quilicura', enabled: false, cost: 4000},
+  {id: 'Huechuraba', name: 'Huechuraba', enabled: false, cost: 4000},
+  {id: 'Vitacura', name: 'Vitacura', enabled: false, cost: 4000},
+  {id: 'Pudahuel', name: 'Pudahuel', enabled: false, cost: 4000},
+  {id: 'Anillo_Oeste', name: 'Anillo Oeste', enabled: false, cost: 4000},
+  {id: 'Anillo_Este', name: 'Anillo Este', enabled: false, cost: 4000},
+  {id: 'Las_Condes', name: 'Las Condes de Santiago', enabled: false, cost: 4000},
+  {id: 'La_Reina', name: 'La Reina', enabled: false, cost: 4000},
+  {id: 'Penalolen', name: 'Peñalolén', enabled: false, cost: 4000},
+  {id: 'La_Florida', name: 'La Florida', enabled: false, cost: 4000},
+  {id: 'Puente_Alto', name: 'Puente Alto', enabled: false, cost: 4000},
+  {id: 'La_Pintana', name: 'La Pintana', enabled: false, cost: 4000},
+  {id: 'El_Bosque', name: 'El Bosque', enabled: false, cost: 4000},
+  {id: 'San_Bernardo', name: 'San Bernardo', enabled: false, cost: 4000},
+  {id: 'Padre_Hurtado', name: 'Padre Hurtado', enabled: false, cost: 4000},
+  {id: 'Maipu', name: 'Maipú', enabled: false, cost: 4000},
 ])
+const apiConfiguration = ref({
+  hagoEnvios: false,
+  delivery_ranges: {
+    week: {
+      from: null,
+      to: null,
+      capacity: null,
+      cutoff: null,
+    },
+    saturday: {
+      from: null,
+      to: null,
+      capacity: null,
+      cutoff: null,
+    },
+    sunday: {
+      from: null,
+      to: null,
+      capacity: null,
+      cutoff: null
+    }
+  }
+});
+console.log('props.apiState', props.apiState);
+
+apiConfiguration.value.hagoEnvios = props.apiState.hagoEnvios;
+apiConfiguration.value.delivery_ranges = {...apiConfiguration.value.delivery_ranges, ...props.apiState.apiConfiguration.delivery_ranges };
+rangehours.value = props.apiState.rangehours;
+rangecutoff.value = props.apiState.rangecutoff;
+saturdayEnabled.value = props.apiState.saturdayEnabled;
+sundayEnabled.value = props.apiState.sundayEnabled;
+zones.value = props.apiState.zones;
+const capacityMin = ref(props.apiState.capacityMin);
+const capacityMax = ref(props.apiState.capacityMax);
+console.log((new Date).toLocaleTimeString());
+const updatedAt = computed(() => {
+  if( props.apiState.meta.updated_at ){
+    const fecha = new Date(props.apiState.meta.updated_at);
+    return fecha.toLocaleTimeString()+' '+fecha.toLocaleDateString();
+  }else{
+    return '';
+  }
+  
+})
+
 const allZones = ref(false)
 watch( allZones, (newValue,oldValue) => {
   if( newValue && !oldValue ){
@@ -271,11 +362,11 @@ const sendForm = async () => {
   waiting.value = true;
   const responseData = await fetchWrapper.post(`${import.meta.env.VITE_API_URL}/marketplaces/client_api`, {
     payload:{
+      apiConfiguration: apiConfiguration.value,
       zones: zones.value,
-      scheduling: scheduling.value,
     },
-    action: 'send_api_configuration',
-    marketplace: 'ml'
+    action: 'applyApiConfiguration',
+    marketplace: 'Mercadolibre'
   }).finally(() => {
     waiting.value = false;
   }).then((data) => {
@@ -283,5 +374,47 @@ const sendForm = async () => {
   });
   
 }
-
+const sendFormScheduling = async () => {
+  waiting.value = true;
+  const responseData = await fetchWrapper.post(`${import.meta.env.VITE_API_URL}/marketplaces/cron_jobs`, {
+    payload:{
+      apiConfiguration: apiConfiguration.value,
+      zones: zones.value,
+    },
+    action: 'applyEnviosFlexConfiguration',
+    marketplace: 'Mercadolibre',
+    ...scheduling.value
+  }).finally(() => {
+    waiting.value = false;
+  }).then((data) => {
+    // TODO: Limpiar los inputs
+    toast(data.message,{prependIcon: 'mdi-check-circle', cardProps: { color: 'success'}});
+    fetchDataScheduledConfigs();
+  });
+}
+const fetchDataScheduledConfigs = async () => {
+  waiting.value = true;
+  const responseData = await fetchWrapper.get(`${import.meta.env.VITE_API_URL}/marketplaces/cron_jobs`, {
+    action: 'getEnviosFlexConfiguration',
+    marketplace: 'Mercadolibre',
+  }).finally(() => {
+    waiting.value = false;
+  }).then((data) => {
+    scheduledConfigs.value = data;
+  });
+}
+const obtenerDiaSemanaPorNumero = (n) => {
+  const objeto = {
+    1: 'Lunes',
+    2: 'Martes',
+    3: 'Miércoles',
+    4: 'Jueves',
+    5: 'Viernes',
+    6: 'Sábado',
+    7: 'Domingo'
+  }
+}
+onMounted(() => {
+  fetchDataScheduledConfigs();
+})
 </script>

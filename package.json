@@ -30,6 +30,7 @@
         "@fontsource/public-sans": "^5.0.18",
         "@fontsource/roboto": "^5.0.13",
         "@mdi/font": "^7.4.47",
+        "@mdi/js": "^7.4.47",
         "@tiptap/starter-kit": "^2.4.0",
         "@tiptap/vue-3": "^2.4.0",
         "ant-design-vue": "^4.2.3",

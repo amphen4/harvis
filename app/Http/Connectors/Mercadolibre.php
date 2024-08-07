@@ -8,6 +8,7 @@ use App\Models\Marketplace;
 use App\Models\Shop;
 use Carbon\Carbon;
 use Error;
+use GuzzleHttp\Client;
 
 class Mercadolibre {
 
@@ -30,9 +31,24 @@ class Mercadolibre {
                 throw new Error("El siguiente shop_marketplace_config está perdido: $marketplaceConfig->name");
             }
         }
+        if( !Storage::exists('http/'.$this->shop->shops_id.'_'.$this->marketplace->marketplaces_id.'.json') ){
+            throw new Error("Debe autenticarse con OAuth en Mercadolibre. ".'https://auth.mercadolibre.cl/authorization?response_type=code&client_id=$APP_ID&redirect_uri=$YOUR_URL&state=$state');
+        }
+        $file_contents = Storage::get('http/'.$this->shop->shops_id.'_'.$this->marketplace->marketplaces_id.'.json');
+        $json = json_decode($file_contents, true);
+        if( count($json) ){
+            $keys = array_keys($json);
+            foreach( $keys as $key ){
+                $this->shopConfigsData[$key] = $json[$key];
+            }
+        }
     }
-    public function makeRequest($method, $uri, $body = null, $headers = []){
-        
+    public function getShopConfigKey($key){
+        return $this->shopConfigsData[$key];
+    }
+    public function makeRequest($method, $url, $body = null, $headers = []){
+        $uri = $this::API_BASE_URL . '/' . $url;
+        $method = strtoupper($method);
         if( !Storage::exists('http/'.$this->shop->shops_id.'_'.$this->marketplace->marketplaces_id.'.json') ){
             throw new Error("Debe autenticarse con OAuth en Mercadolibre. ".'https://auth.mercadolibre.cl/authorization?response_type=code&client_id=$APP_ID&redirect_uri=$YOUR_URL&state=$state');
         }
@@ -50,19 +66,27 @@ class Mercadolibre {
                 'Authorization' => 'Bearer '.$this->shopConfigsData['AccessToken'],
                 'Accept' => 'application/json'
             ]);
+            if( $method == 'POST' || $method == 'PUT' ){
+                $headers['Content-Type'] = 'application/json';
+            }
             \Log::info( json_encode([
                 'method' => $method,
                 'uri' => $uri,
                 'body' => $body,
                 'headers' => $headers
             ]) );
-            if( strtoupper($method) == 'GET' ){
+            if( $method == 'GET' ){
                 return Http::withHeaders($headers)->withoutVerifying()->get($uri);
-            }elseif( strtoupper($method) == 'POST' ){
+            }elseif( $method == 'POST' || $method == 'PUT' ){
                 if( $body ){
-                    return Http::withHeaders($headers)->withoutVerifying()->post($uri);
+                    $client = new Client();
+                    $response = $client->request($method, $uri, [
+                        'headers' => $headers,
+                        'body' => $body
+                    ]);
+                    return $response->getBody()->getContents();
                 }else{
-                    return Http::withHeaders($headers)->withoutVerifying()->asForm()->post($uri, $body);
+                    return Http::withHeaders($headers)->withoutVerifying()->post($uri);
                 }
                 
             }else{
@@ -120,22 +144,7 @@ class Mercadolibre {
     }
     public function getProducts($queryParams = [])
     {
-        $uri = $this::API_BASE_URL . '/v3/items';
-        if( count($queryParams) ){
-            $c = 0;
-            foreach( $queryParams as $key => $value ){
-                if( $c === 0 ){
-                    $uri .= "?$key=$value";
-                }else{
-                    $uri .= "&$key=$value";
-                }
-                $c++;
-            }
-        }
-        
-        $response = $this->makeRequest('GET', $uri, null, ['WM_SVC.NAME' => 'Walmart Service Name', 'WM_MARKET' => 'cl']);
-
-        return json_decode( $response );
+        return [];
     }
 
 }

@@ -16,14 +16,36 @@ function request(method: string) {
       headers: authHeader(url)
     };
     if (body) {
-      requestOptions.headers['Content-Type'] = 'application/json';
-      requestOptions.body = JSON.stringify(body);
+      if( method == 'GET' ){
+        url = updateURLWithParams(url, body);
+      }else{
+        requestOptions.headers['Content-Type'] = 'application/json';
+        requestOptions.body = JSON.stringify(body);
+      }
+      
     }
     store.dispatch('harvis/ADD_LOADING_COUNTER', 1);
     return fetch(url, requestOptions).then(handleResponse);
   };
 }
 
+function updateURLWithParams(url : string, params : object) {
+  // Crear un objeto URL a partir de la cadena proporcionada
+  let urlObj = new URL(url);
+
+  // Obtener los parámetros de consulta existentes
+  let queryParams = new URLSearchParams(urlObj.search);
+
+  // Agregar o actualizar los parámetros de consulta desde el objeto
+  for (let key in params) {
+      queryParams.set(key, params[key]);
+  }
+
+  // Actualizar la parte de la búsqueda de la URL con los nuevos parámetros
+  urlObj.search = queryParams.toString();
+
+  return urlObj.toString();
+}
 // helper functions
 
 function authHeader(url: string) {
@@ -55,8 +77,12 @@ function handleResponse(response: any) {
       if ([422].includes(response.status) && user) {
         // validation error messages from laravel
         const messages : Array<String> = [];
-        if( data.errors ){
+        if( data.errors){
           Object.keys(data.errors).forEach( e => messages.push(data.errors[e][0]));
+        }else{
+          if( data.message && (typeof data.message == 'string') ){
+            messages.push(data.message);
+          }
         }
         if( messages.length ){
           store.dispatch('harvis/RAISE_SNACKBAR', messages);
