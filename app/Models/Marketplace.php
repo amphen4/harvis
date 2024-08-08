@@ -26,7 +26,7 @@ class Marketplace extends Model
     public static function getAvailableApiActionsByMarketplaceName($marketplaceName){
         switch($marketplaceName){
             case 'Mercadolibre':
-                return ['getEnviosFlexConfigs','applyApiConfiguration'];
+                return ['getEnviosFlexConfigs','applyApiConfigurationFlex'];
             break;
             default:
                 return [];

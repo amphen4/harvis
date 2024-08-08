@@ -90,7 +90,7 @@ class Mercadolibre {
         }
         return $outputArray;
     }
-    public function applyApiConfiguration($request){
+    public function applyApiConfigurationFlex($request){
         
         $classNameConnector = 'App\\Http\Connectors\\'.$this->marketplace->connector_class_name;
         $connector = new $classNameConnector($this->marketplace, $this->shop);

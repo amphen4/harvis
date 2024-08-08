@@ -39,6 +39,7 @@ Route::middleware('auth:sanctum')->group(function(){
 
     Route::post('marketplaces/cron_jobs', [CronJobsController::class, 'store']);
     Route::get('marketplaces/cron_jobs', [CronJobsController::class, 'index']);
+    Route::delete('marketplaces/cron_jobs', [CronJobsController::class, 'delete']);
 });
 
 Route::get('externals/ml/redirect_oauth', [Mercadolibre::class, 'redirect_callback']);

@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Marketplace;
 use App\Models\Shop;
-use Illuminate\Database\Eloquent\Casts\AsCollection;
 
 class MarketplaceApiCronJob extends Model
 {
@@ -29,5 +28,4 @@ class MarketplaceApiCronJob extends Model
     public function marketplace (){
         return $this->belongsTo(Marketplace::class, 'marketplace_id', 'marketplaces_id');
     }
-
 }

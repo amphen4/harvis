@@ -15,7 +15,7 @@
               <v-icon icon="mdi-calendar-clock"></v-icon> &nbsp;
               Programar configuración
             </v-btn>
-            <v-bottom-sheet v-model="sheet">
+            <v-bottom-sheet v-model="sheet" v-if="scheduledConfigs.length">
               <template v-slot:activator="{ props }">
                 <v-tooltip text="Ver configuraciones programadas">
                   <template v-slot:activator="props2">
@@ -28,28 +28,27 @@
                     </div>
                   </template>
                 </v-tooltip>
-                  
-                
               </template>
-              <v-table >
-                  <thead>
-                    <tr>
-                      <th>Frecuencia:</th>
-                      <th>Dia(s):</th>
-                      <th>Hora(s):</th>
-                      <th></th>
-                    </tr>
-                  </thead>
-                    <tbody>
-                      <tr v-for="(scheduledConfig,indexScheduledConfig) in scheduledConfigs" :key="indexScheduledConfig">
-                        <td> <strong>{{ scheduledConfig.frequency_type }}</strong></td>
-                        <td> {{ scheduledConfig.weekdays.map( e => obtenerDiaSemanaPorNumero(e) ).join(', ') }}</td>
-                        <td> {{ scheduledConfig.dayhours.join(', ')  }}</td>
-                        <td class="text-right"> <v-btn><v-icon icon="mdi-delete"></v-icon></v-btn> </td>
-                      </tr>
-                    </tbody>
-                  </v-table>
-
+              <v-table>
+                <thead>
+                  <tr>
+                    <th>Frecuencia:</th>
+                    <th>Dia(s):</th>
+                    <th>Hora(s):</th>
+                    <th>Configuración</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="(scheduledConfig,indexScheduledConfig) in scheduledConfigs" :key="indexScheduledConfig">
+                    <td> <strong>{{ scheduledConfig.frequency_type }}</strong></td>
+                    <td> {{ scheduledConfig.weekdays.map( e => obtenerDiaSemanaPorNumero(e) ).join(', ') }}</td>
+                    <td> {{ scheduledConfig.dayhours.join(', ')  }}</td>
+                    <td><vue-json-pretty :data="scheduledConfig.payload.payload"  :deep="0" showLineNumber /></td>
+                    <td class="text-right"> <v-btn @click="sendFormDeleteScheduledConfig(scheduledConfig.id)" ><v-icon icon="mdi-delete"></v-icon></v-btn> </td>
+                  </tr>
+                </tbody>
+              </v-table>
             </v-bottom-sheet>
           </v-sheet>
         </v-col>
@@ -59,7 +58,7 @@
           <UiTitleCard title="Tiempos de entrega" subtitle="Establece los días y horarios en los que ofreces envíos, y el máximo de envíos que podrás entregar." class-name="mt-2 px-0 pb-0 rounded-md">
           <v-card elevation="0">
             <v-card-text>
-              <v-switch hide-details="auto" color="success" :label="apiConfiguration.hagoEnvios ? 'Si hago envíos en el día' : 'No hago envíos en el día'" v-model="apiConfiguration.hagoEnvios"></v-switch>
+              <v-switch hide-details="auto" hint="(Por ahora no es configurable)" readonly color="success" :label="apiConfiguration.hagoEnvios ? 'Si hago envíos en el día' : 'No hago envíos en el día'" v-model="apiConfiguration.hagoEnvios"></v-switch>
             </v-card-text>
           </v-card>
           </UiTitleCard>
@@ -169,7 +168,6 @@
           <div class="text-h5 text-medium-emphasis ps-2">
             Programar configuración
           </div>
-
           <v-btn
             icon="mdi-close"
             variant="text"
@@ -244,6 +242,8 @@ import UiTitleCard from '@/components/shared/UiTitleCard.vue';
 import { fetchWrapper } from '@/utils/helpers/fetch-wrapper';
 import { VSonner, toast } from 'vuetify-sonner'
 import 'vuetify-sonner/style.css'
+import VueJsonPretty from "vue-json-pretty";
+import "vue-json-pretty/lib/styles.css";
 const emit= defineEmits(["refresh"])
 const emitirEvento = (nombreEvento) => {
   emit(nombreEvento);
@@ -268,7 +268,7 @@ const switchProgrammedDay = (dayNumber) => {
     scheduling.value.weekdays.splice( scheduling.value.weekdays.indexOf(dayNumber) , 1)
   }
 }
-//const apiStateReactive = ref({hagoEnvios: .hagoEnvios);
+
 const formCompleted = computed(() => {
   const flag = false;
   if( scheduling.value.frequencyType == 'Semanal'){
@@ -276,6 +276,7 @@ const formCompleted = computed(() => {
   } else if ( scheduling.value.frequencyType == 'Diaria'){
     return scheduling.value.dayhours.length
   }
+  return flag
 })
 const rangehours = [9,10,11,12,13,14,15,16,17,18,19,20,21];
 const rangecutoff = [12,13,14,15,16,17,18];
@@ -324,7 +325,6 @@ const apiConfiguration = ref({
     }
   }
 });
-console.log('props.apiState', props.apiState);
 
 apiConfiguration.value.hagoEnvios = props.apiState.hagoEnvios;
 apiConfiguration.value.delivery_ranges = {...apiConfiguration.value.delivery_ranges, ...props.apiState.apiConfiguration.delivery_ranges };
@@ -335,7 +335,7 @@ sundayEnabled.value = props.apiState.sundayEnabled;
 zones.value = props.apiState.zones;
 const capacityMin = ref(props.apiState.capacityMin);
 const capacityMax = ref(props.apiState.capacityMax);
-console.log((new Date).toLocaleTimeString());
+
 const updatedAt = computed(() => {
   if( props.apiState.meta.updated_at ){
     const fecha = new Date(props.apiState.meta.updated_at);
@@ -365,7 +365,7 @@ const sendForm = async () => {
       apiConfiguration: apiConfiguration.value,
       zones: zones.value,
     },
-    action: 'applyApiConfiguration',
+    action: 'applyApiConfigurationFlex',
     marketplace: 'Mercadolibre'
   }).finally(() => {
     waiting.value = false;
@@ -381,13 +381,19 @@ const sendFormScheduling = async () => {
       apiConfiguration: apiConfiguration.value,
       zones: zones.value,
     },
-    action: 'applyEnviosFlexConfiguration',
+    action: 'applyApiConfigurationFlex',
     marketplace: 'Mercadolibre',
     ...scheduling.value
   }).finally(() => {
     waiting.value = false;
   }).then((data) => {
     // TODO: Limpiar los inputs
+    scheduling.value = {
+      weekdays: [],
+      dayhours: [],
+      frequencyType: null,
+    }
+    dialogs.value.scheduling = false;
     toast(data.message,{prependIcon: 'mdi-check-circle', cardProps: { color: 'success'}});
     fetchDataScheduledConfigs();
   });
@@ -400,6 +406,9 @@ const fetchDataScheduledConfigs = async () => {
   }).finally(() => {
     waiting.value = false;
   }).then((data) => {
+    if( !data.length ){
+      sheet.value = false;
+    }
     scheduledConfigs.value = data;
   });
 }
@@ -413,6 +422,17 @@ const obtenerDiaSemanaPorNumero = (n) => {
     6: 'Sábado',
     7: 'Domingo'
   }
+}
+const sendFormDeleteScheduledConfig = async (id) => {
+  waiting.value = true;
+  const responseData = await fetchWrapper.delete(`${import.meta.env.VITE_API_URL}/marketplaces/cron_jobs`, {
+    marketplace: 'Mercadolibre',
+    id
+  }).finally(() => {
+    waiting.value = false;
+  }).then(() => {
+    fetchDataScheduledConfigs();
+  });
 }
 onMounted(() => {
   fetchDataScheduledConfigs();
