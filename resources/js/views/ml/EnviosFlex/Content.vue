@@ -422,6 +422,7 @@ const obtenerDiaSemanaPorNumero = (n) => {
     6: 'Sábado',
     7: 'Domingo'
   }
+  return objeto[n];
 }
 const sendFormDeleteScheduledConfig = async (id) => {
   waiting.value = true;
